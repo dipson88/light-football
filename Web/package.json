@@ -9,7 +9,7 @@
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "cd .. && husky install api/.husky"
+    "prepare": "cd .. && husky install Web/.husky"
   },
   "repository": {
     "type": "git",
