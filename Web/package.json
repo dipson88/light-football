@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "dev": "nodemon src/index.ts --exec \"npm run lint && ts-node\"",
-    "lint": "eslint src/**/*.ts",
+    "dev": "nodemon src/index.ts",
+    "lint": "eslint src/**/*.ts && tsc --noemit",
     "lint:fix": "eslint src/**/*.ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "cd .. && husky install Web/.husky"
