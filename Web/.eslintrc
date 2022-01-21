@@ -61,6 +61,14 @@
         ]
       }
     ],
+    "keyword-spacing": [
+      "error",
+      {
+        "before": true,
+        "after": true
+      }
+    ],
+    "padded-blocks": ["error", "never"],
     "no-console": "off",
     "linebreak-style": "off",
     "comma-dangle": ["error", "never"],
