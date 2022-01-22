@@ -7,13 +7,12 @@ const getHashedPassword = async (password: string) => {
   return await bcrypt.hash(password, 8)
 }
 
-const getToken = async (_id: string) => {
-  // TODO move env variables to the config file
-  return jwt.sign({ _id }, process.env.JWT_SECRET || 'thisistest')
-}
-
 const isPasswordMatch = async (password: string, userPassword: string) => {
   return await bcrypt.compare(password, userPassword)
+}
+
+const getToken = async (_id: string) => {
+  return jwt.sign({ _id }, process.env.JWT_SECRET ?? '')
 }
 
 const createUser = async (req: Request, res: Response) => {

@@ -1,12 +1,16 @@
 import mongoose from 'mongoose'
 import app from './app'
+import dotenv from 'dotenv'
 
-// TODO move env variables to the config file
-const PORT = process.env.PORT || 8000
-const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/light-football'
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config()
+}
 
-mongoose.connect(MONGODB_URL)
+const PORT = process.env.PORT
+const MONGODB_URL = process.env.MONGODB_URL ?? ''
 
-app.listen(PORT, () => {
-  console.log(`Server is runnung on port ${PORT}`)
+mongoose.connect(MONGODB_URL).then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is runnung on port ${PORT}`)
+  })
 })
