@@ -15,7 +15,7 @@ const getAllMatches = async (req: Request, res: Response) => {
 
   console.log(matches.data)
 
-  res.status(201).send({ matches: matches.data })
+  res.status(200).send({ matches: matches.data })
 }
 
 export {

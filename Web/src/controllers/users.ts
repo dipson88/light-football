@@ -24,7 +24,7 @@ const createUser = async (req: Request, res: Response) => {
     await user.save()
     const token = await getToken(user._id.toString())
 
-    res.status(201).send({
+    return res.status(201).send({
       token,
       user: {
         id: user._id,
@@ -33,7 +33,7 @@ const createUser = async (req: Request, res: Response) => {
       }
     })
   } catch (e) {
-    res.status(400).send(e)
+    return res.status(400).send(e)
   }
 }
 
@@ -52,7 +52,7 @@ const loginUser = async (req: Request, res: Response) => {
 
     const token = await getToken(user._id.toString())
 
-    res.status(201).send({
+    return res.status(200).send({
       token,
       user: {
         id: user._id,
@@ -61,7 +61,7 @@ const loginUser = async (req: Request, res: Response) => {
       }
     })
   } catch (e) {
-    res.status(400).send(e)
+    return res.status(400).send(e)
   }
 }
 

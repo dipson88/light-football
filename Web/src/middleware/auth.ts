@@ -3,17 +3,17 @@ import jwt from 'jsonwebtoken'
 
 const auth = (req: Request, res: Response, next: NextFunction) => {
   try {
-    // TODO add real user check
     const token = req.header('Authorization')?.replace('Bearer ', '') ?? ''
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || '')
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as { _id: string }
+    req.body.userId = decoded._id
 
     if (!decoded) {
       throw new Error()
     }
 
-    next()
+    return next()
   } catch {
-    res.status(401).send({ error: 'Please authentificate' })
+    return res.status(401).send({ error: 'Please authentificate' })
   }
 }
 

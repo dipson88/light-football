@@ -68,6 +68,8 @@
         "after": true
       }
     ],
+    "quotes": ["error", "single"],
+    "object-curly-spacing": ["error", "always"],
     "padded-blocks": ["error", "never"],
     "no-console": "off",
     "linebreak-style": "off",
