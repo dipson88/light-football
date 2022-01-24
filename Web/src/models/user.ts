@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose'
 import validator from 'validator'
+import modelNames from './modelNames'
 
 interface User {
   email: string
@@ -41,7 +42,7 @@ const userSchema = new Schema<User>({
   timestamps: true
 })
 
-const UserModel = model<User>('User', userSchema)
+const UserModel = model<User>(modelNames.User, userSchema)
 
 export default UserModel
 
