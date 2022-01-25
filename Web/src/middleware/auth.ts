@@ -5,7 +5,7 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.header('Authorization')?.replace('Bearer ', '') ?? ''
     const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as { _id: string }
-    req.body.userId = decoded._id
+    req.params.currentUserId = decoded._id.toString()
 
     if (!decoded) {
       throw new Error()

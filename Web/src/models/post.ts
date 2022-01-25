@@ -4,7 +4,8 @@ import modelNames from './modelNames'
 interface Post {
   title: string
   content: string
-  userId: Types.ObjectId
+  userId: Types.ObjectId,
+  matchId: string // TODO: add ref to match
 }
 
 const postSchema = new Schema<Post>({
@@ -18,7 +19,12 @@ const postSchema = new Schema<Post>({
   },
   userId: {
     type: Types.ObjectId,
-    ref: modelNames.User
+    ref: modelNames.User,
+    required: true
+  },
+  matchId: {
+    type: String,
+    required: true
   }
 })
 

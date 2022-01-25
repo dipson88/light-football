@@ -5,6 +5,6 @@ import { auth } from '../middleware/auth'
 const router = express.Router()
 
 router.post('/posts/create', auth, createPost)
-router.get('/posts/get', auth, getPost)
+router.get('/posts/:id', auth, getPost)
 
 export default router
