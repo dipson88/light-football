@@ -1,35 +1,37 @@
 import { Request, Response } from 'express'
-import { PostModel } from '../models/post'
+import { createPostModel, getPostsModel } from '../models/post'
 
 const createPost = async (req: Request, res: Response) => {
-  try {
-    const post = new PostModel({
-      ...req.body,
-      userId: req.params.currentUserId
-    })
+  const { error, data } = await createPostModel({
+    ...req.body,
+    userId: req.params.currentUserId
+  })
 
-    await post.save()
-
-    return res.status(201).send(post)
-  } catch (e) {
-    return res.status(400).send(e)
+  if (error || !data) {
+    return res.status(400).send(error)
   }
+
+  const [post] = data
+
+  return res.status(201).send(post)
 }
 
 const getPost = async (req: Request, res: Response) => {
-  try {
-    const postId = req.params.id
-    const userId = req.params.currentUserId
-    const post = await PostModel.findById(postId)
+  const postId = req.params.id
+  const userId = req.params.currentUserId
+  const { error, data } = await getPostsModel({ _id: postId, userId })
 
-    if (!post || post.userId.toString() !== userId) {
-      return res.status(404).send()
-    }
-
-    return res.status(200).send(post)
-  } catch (e) {
-    return res.status(404).send(e)
+  if (error) {
+    return res.status(400).send(error)
   }
+
+  if (!data || !data.length) {
+    return res.status(404).send()
+  }
+
+  const [post] = data
+
+  return res.status(200).send(post)
 }
 
 export {
