@@ -1,68 +1,49 @@
 import { Request, Response } from 'express'
-import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { UserModel, User } from '../models/user'
-
-const getHashedPassword = async (password: string) => {
-  return await bcrypt.hash(password, 8)
-}
-
-const isPasswordMatch = async (password: string, userPassword: string) => {
-  return await bcrypt.compare(password, userPassword)
-}
+import { createUserModel, getUserModel, IUser, isPasswordHashMatch } from '../models/user'
 
 const getToken = async (_id: string) => {
   return jwt.sign({ _id }, process.env.JWT_SECRET ?? '')
 }
 
 const createUser = async (req: Request, res: Response) => {
-  const user = new UserModel(req.body)
+  const { error, data } = await createUserModel({
+    ...req.body
+  })
 
-  try {
-    await user.validate()
-    user.password = await getHashedPassword(user.password)
-    await user.save()
-    const token = await getToken(user._id.toString())
-
-    return res.status(201).send({
-      token,
-      user: {
-        id: user._id,
-        emial: user.email,
-        name: user.name
-      }
-    })
-  } catch (e) {
-    return res.status(400).send(e)
+  if (error || !data) {
+    return res.status(400).send(error)
   }
+
+  const token = await getToken(data._id)
+  res.status(201).send({
+    token,
+    user: {
+      id: data._id,
+      emial: data.email,
+      name: data.name
+    }
+  })
 }
 
 const loginUser = async (req: Request, res: Response) => {
-  try {
-    const { email, password } = req.body as User
-    const user = await UserModel.findOne({ email })
+  const { email, password } = req.body as IUser
+  const { error, data } = await getUserModel({ email })
 
-    if (!user) {
-      throw new Error('Unable to login')
-    }
-
-    if (!isPasswordMatch(password, user.password)) {
-      throw new Error('Unable to login')
-    }
-
-    const token = await getToken(user._id.toString())
-
-    return res.status(200).send({
-      token,
-      user: {
-        id: user._id,
-        emial: user.email,
-        name: user.name
-      }
-    })
-  } catch (e) {
-    return res.status(400).send(e)
+  if (error || !data || !isPasswordHashMatch(password, data.password)) {
+    return res.status(400).send(error)
   }
+
+  const token = await getToken(data._id)
+
+  return res.status(200).send({
+    token,
+    user: {
+      id: data._id,
+      emial: data.email,
+      name: data.name
+    }
+  })
 }
 
 export {

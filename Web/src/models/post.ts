@@ -81,9 +81,12 @@ const getPostsModel = async (data: Partial<IPost>): Promise<PostDataBaseResult> 
   }
 }
 
-export default PostModel
-
 export {
+  createPostModel,
+  getPostsModel
+}
+
+export default {
   createPostModel,
   getPostsModel
 }

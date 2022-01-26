@@ -1,14 +1,24 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 import validator from 'validator'
+import bcrypt from 'bcryptjs'
 import modelNames from './modelNames'
+import { DataBaseDocument, DataBaseResult } from './modelTypes'
 
-interface User {
+interface IUser {
+  _id: string
   email: string
   password: string
   name: string
 }
 
-const userSchema = new Schema<User>({
+interface IUserDocument extends Document {
+  _id: Types.ObjectId
+  email: string
+  password: string
+  name: string
+}
+
+const userSchema = new Schema<IUserDocument>({
   email: {
     type: String,
     unique: true,
@@ -42,11 +52,66 @@ const userSchema = new Schema<User>({
   timestamps: true
 })
 
-const UserModel = model<User>(modelNames.User, userSchema)
+const UserModel = model<IUserDocument>(modelNames.User, userSchema)
 
-export default UserModel
+type UserDataBaseDocument = DataBaseDocument<IUserDocument>
+
+type UserDataBaseResult = DataBaseResult<IUser>
+
+const getHashedPassword = async (password: string) => {
+  return await bcrypt.hash(password, 8)
+}
+
+const isPasswordHashMatch = async (password: string, userPassword: string) => {
+  return await bcrypt.compare(password, userPassword)
+}
+
+const mapUser= (dbUser: UserDataBaseDocument): IUser => {
+  return {
+    _id: dbUser._id?.toString(),
+    email: dbUser.email,
+    password: dbUser.password,
+    name: dbUser.name
+  }
+}
+
+const createUserModel = async (data: IUser): Promise<UserDataBaseResult> => {
+  try {
+    const user = new UserModel({ ...data })
+    await user.validate()
+    user.password = await getHashedPassword(user.password)
+    await user.save()
+
+    return { error: null, data: mapUser(user) }
+  } catch (e) {
+    return { error: e }
+  }
+}
+
+const getUserModel = async (data: Partial<IUser>): Promise<UserDataBaseResult> => {
+  try {
+    if (data._id && data._id.length !== 24) {
+      return { error: null, data: null }
+    }
+
+    const user = await UserModel.findOne({ ...data })
+    const resultData = user ? mapUser(user) : null
+
+    return { error: null, data: resultData }
+  } catch (e) {
+    return { error: e }
+  }
+}
 
 export {
-  UserModel,
-  User
+  IUser,
+  isPasswordHashMatch,
+  createUserModel,
+  getUserModel
+}
+
+export default {
+  isPasswordHashMatch,
+  createUserModel,
+  getUserModel
 }
