@@ -1,6 +1,7 @@
 import { Schema, model, Types } from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import modelNames from './modelNames'
 import { DataBaseDocument, DataBaseResult } from './modelTypes'
 
@@ -66,6 +67,20 @@ const isPasswordHashMatch = async (password: string, userPassword: string) => {
   return await bcrypt.compare(password, userPassword)
 }
 
+const createUserToken = (_id: string) => {
+  return jwt.sign({ _id }, process.env.JWT_SECRET ?? '')
+}
+
+const verifyUserToken = (token: string): { _id: string } | null => {
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as { _id: string }
+
+    return decoded
+  } catch {
+    return null
+  }
+}
+
 const mapUser= (dbUser: UserDataBaseDocument): IUser => {
   return {
     _id: dbUser._id?.toString(),
@@ -106,12 +121,16 @@ const getUserModel = async (data: Partial<IUser>): Promise<UserDataBaseResult> =
 export {
   IUser,
   isPasswordHashMatch,
+  createUserToken,
+  verifyUserToken,
   createUserModel,
   getUserModel
 }
 
 export default {
   isPasswordHashMatch,
+  createUserToken,
+  verifyUserToken,
   createUserModel,
   getUserModel
 }

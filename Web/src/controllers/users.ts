@@ -1,10 +1,5 @@
 import { Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
-import { createUserModel, getUserModel, IUser, isPasswordHashMatch } from '../models/user'
-
-const getToken = async (_id: string) => {
-  return jwt.sign({ _id }, process.env.JWT_SECRET ?? '')
-}
+import { createUserModel, getUserModel, IUser, createUserToken, isPasswordHashMatch } from '../models/user'
 
 const createUser = async (req: Request, res: Response) => {
   const { error, data } = await createUserModel({
@@ -15,8 +10,9 @@ const createUser = async (req: Request, res: Response) => {
     return res.status(400).send(error)
   }
 
-  const token = await getToken(data._id)
-  res.status(201).send({
+  const token = createUserToken(data._id)
+
+  return res.status(201).send({
     token,
     user: {
       id: data._id,
@@ -34,7 +30,7 @@ const loginUser = async (req: Request, res: Response) => {
     return res.status(400).send(error)
   }
 
-  const token = await getToken(data._id)
+  const token = createUserToken(data._id)
 
   return res.status(200).send({
     token,

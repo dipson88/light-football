@@ -1,20 +1,17 @@
 import { Request, Response, NextFunction } from 'express'
-import jwt from 'jsonwebtoken'
+import { verifyUserToken } from '../models/user'
 
 const auth = (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const token = req.header('Authorization')?.replace('Bearer ', '') ?? ''
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as { _id: string }
-    req.params.currentUserId = decoded._id.toString()
+  const token = req.header('Authorization')?.replace('Bearer ', '') ?? ''
+  const decoded = verifyUserToken(token)
 
-    if (!decoded) {
-      throw new Error()
-    }
-
-    return next()
-  } catch {
+  if (!decoded) {
     return res.status(401).send({ error: 'Please authentificate' })
   }
+
+  req.params.currentUserId = decoded._id
+
+  return next()
 }
 
 export {
