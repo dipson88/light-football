@@ -1,4 +1,5 @@
 export default {
   User: 'User',
-  Post: 'Post'
+  Post: 'Post',
+  Prediction: 'Prediction'
 }
