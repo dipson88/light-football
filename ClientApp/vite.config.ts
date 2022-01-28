@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import vuePlugin from '@vitejs/plugin-vue'
 import eslintPlugin from 'vite-plugin-eslint'
-import VitePluginStylelint from '@amatlash/vite-plugin-stylelint'
+import viteStylelintPlugin from '@amatlash/vite-plugin-stylelint'
 import * as path from 'path'
 
 // https://vitejs.dev/config/
@@ -12,8 +12,8 @@ export default defineConfig({
     }
   },
   plugins: [
-    vue(),
+    vuePlugin(),
     eslintPlugin(),
-    VitePluginStylelint({ include: './src/**/*.(vue|scss|css)' })
+    viteStylelintPlugin()
   ]
 })
