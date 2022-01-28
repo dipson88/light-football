@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+cd ClientApp
+npm run lint:script
+npm run lint:style
+npm run lint:markup
