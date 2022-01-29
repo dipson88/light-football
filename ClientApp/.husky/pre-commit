@@ -3,3 +3,4 @@
 
 cd ClientApp
 npx lint-staged
+npm run lint:type

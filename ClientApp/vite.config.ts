@@ -15,5 +15,8 @@ export default defineConfig({
     vuePlugin(),
     eslintPlugin(),
     viteStylelintPlugin()
-  ]
+  ],
+  build: {
+    outDir: 'dist'
+  }
 })

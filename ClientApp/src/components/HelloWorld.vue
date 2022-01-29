@@ -1,14 +1,9 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-
-// defineProps<{ msg: string }>()
-
-const count = ref(0)
-
-const msg = ref('message')
-</script>
-
 <template>
+  <img
+    alt="Vue logo"
+    src="@/assets/logo.png"
+  >
+
   <h1>{{ msg }}</h1>
 
   <p>
@@ -51,6 +46,23 @@ const msg = ref('message')
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
 </template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  name: 'HelloWorld',
+  setup () {
+    const count = ref(0)
+    const msg = ref('message')
+
+    return {
+      count,
+      msg
+    }
+  }
+})
+</script>
 
 <style lang="scss">
 a {
