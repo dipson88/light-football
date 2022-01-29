@@ -16,6 +16,7 @@ module.exports = {
   },
   plugins: ['vue'],
   rules: {
+    '@typescript-eslint/no-unused-vars': ['error'],
     'array-bracket-spacing': ['error', 'never'],
     'comma-spacing': ['error', { 'before': false, 'after': true }],
     'no-multiple-empty-lines': ['error', { 'max': 1, 'maxEOF': 0 }],
