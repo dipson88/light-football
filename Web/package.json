@@ -6,8 +6,9 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "dev": "nodemon src/index.ts",
-    "lint": "eslint src/**/*.ts && tsc --noemit",
+    "lint:script": "eslint src/**/*.ts && tsc-files --noEmit",
     "lint:fix": "eslint src/**/*.ts --fix",
+    "lint:all": "lint-staged",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "cd .. && husky install Web/.husky"
   },
@@ -33,9 +34,11 @@
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.4",
     "husky": "^7.0.0",
+    "lint-staged": "^12.3.2",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
+    "tsc-files": "^1.1.3",
     "typescript": "^4.5.4"
   },
   "dependencies": {
