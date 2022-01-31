@@ -7,9 +7,9 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint:script": "eslint \"**/*.{vue,ts,js}\"",
-    "lint:style": "stylelint src/**/*.{css,scss,vue} --custom-syntax postcss-html",
+    "lint:style": "stylelint src/**/*.{css,scss,vue}",
     "lint:type": "vue-tsc --noEmit",
-    "lint:all": "lint-staged",
+    "lint:all": "eslint \"**/*.{vue,ts,js}\" && stylelint src/**/*.{css,scss,vue} && vue-tsc --noEmit",
     "prepare": "cd .. && husky install ClientApp/.husky"
   },
   "dependencies": {

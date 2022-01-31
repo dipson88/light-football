@@ -1,3 +1,3 @@
 module.exports = {
-  "src/**/**.{js,json,ts}": ["eslint", "tsc-files --noEmit"],
+  "src/**/**.{js,json,ts}": ["eslint"],
 }
