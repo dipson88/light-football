@@ -9,13 +9,31 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')
-    }
+    },
+    extensions: [
+      '.mjs',
+      '.js',
+      '.ts',
+      '.jsx',
+      '.tsx',
+      '.json',
+      '.vue'
+    ],
+    preserveSymlinks: true
   },
   plugins: [
     vuePlugin(),
     eslintPlugin(),
     viteStylelintPlugin()
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        charset: false,
+        additionalData: '@import "/src/styles/helpers/index.scss";'
+      }
+    }
+  },
   build: {
     outDir: 'dist'
   }

@@ -5,8 +5,6 @@ import MainLayout from '@/layouts/MainLayout.vue'
 import ErrorLayout from '@/layouts/ErrorLayout.vue'
 
 import HelloWorld from '@/components/HelloWorld.vue'
-
-// TODO add import helper eslint for vue files
 import Error404 from '@/components/Error404.vue'
 
 const routerNames = routerHelper.names

@@ -75,6 +75,7 @@ label {
 }
 
 code {
+  background-color: $brand-white;
   background-color: #eee;
   padding: 2px 4px;
   border-radius: 4px;
