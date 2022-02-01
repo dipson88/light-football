@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cd Web
-npx lint-staged
+cd ClientApp
+npm run lint:type

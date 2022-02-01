@@ -12,11 +12,7 @@
     "sourceMap": true,
     "noImplicitAny": true
   },
-  "exclude":[
-    "./node_modules",
-    "./ClientApp"
-  ],
-  "display": "Recommended"
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
 }
 
 // {

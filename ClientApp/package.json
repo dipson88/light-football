@@ -1,0 +1,42 @@
+{
+  "name": "vite-project",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite dev",
+    "serve": "vite serve",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint:script": "eslint \"**/*.{vue,ts,js}\"",
+    "lint:style": "stylelint src/**/*.{css,scss,vue}",
+    "lint:type": "vue-tsc --noEmit",
+    "lint:all": "eslint \"**/*.{vue,ts,js}\" && stylelint src/**/*.{css,scss,vue} && vue-tsc --noEmit",
+    "prepare": "cd .. && husky install ClientApp/.husky"
+  },
+  "dependencies": {
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.12"
+  },
+  "devDependencies": {
+    "@amatlash/vite-plugin-stylelint": "^1.2.0",
+    "@types/node": "^17.0.13",
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.1",
+    "@vitejs/plugin-vue": "^2.0.0",
+    "@vue/eslint-config-typescript": "^10.0.0",
+    "eslint": "^8.7.0",
+    "eslint-plugin-vue": "^8.4.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.2",
+    "postcss-html": "^1.3.0",
+    "sass": "^1.49.0",
+    "stylelint": "^14.3.0",
+    "stylelint-config-recommended-scss": "^5.0.2",
+    "stylelint-config-recommended-vue": "^1.1.0",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-config-standard-scss": "^3.0.0",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.2",
+    "vite-plugin-eslint": "^1.3.0",
+    "vue-tsc": "^0.29.8"
+  }
+}
