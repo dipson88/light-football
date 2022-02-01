@@ -10,7 +10,10 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "sourceMap": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"]
 }
