@@ -27,8 +27,8 @@ export class User implements IUser {
 }
 
 export interface IUser {
-  _id: ObjectID,
-  email: string,
-  password: string,
+  _id: ObjectID
+  email: string
+  password: string
   name: string
 }
