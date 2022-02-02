@@ -1,9 +1,9 @@
-import { Request, Response } from 'express'
+import { IRequest, IResponse } from '../interfaces'
 import userService from '../services/userService'
 import authService from '../services/authService'
 import { IUser } from '../entities/user'
 
-const createUser = async (req: Request, res: Response) => {
+const createUser = async (req: IRequest<IUser>, res: IResponse) => {
   const { error, data } = await userService.createUser({ ...req.body })
 
   if (error || !data) {
@@ -22,12 +22,12 @@ const createUser = async (req: Request, res: Response) => {
   })
 }
 
-const loginUser = async (req: Request, res: Response) => {
+const loginUser = async (req: IRequest<IUser>, res: IResponse) => {
   if (!req.body.email || !req.body.password) {
     return res.status(400).send()
   }
 
-  const { email, password } = req.body as IUser
+  const { email, password } = req.body
   const { error, data } = await userService.getUser({ email })
   const isError = error || !data
   const isRightPassword = !isError && await authService.isPasswordHashMatch(password, data.password)

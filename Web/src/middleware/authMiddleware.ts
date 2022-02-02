@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction } from 'express'
+import { NextFunction } from 'express'
+import { IRequest, IResponse } from '../interfaces'
 import authService from '../services/authService'
 
-const auth = (req: Request, res: Response, next: NextFunction) => {
+const authentificateUser = (req: IRequest, res: IResponse, next: NextFunction) => {
   const token = req.header('Authorization')?.replace('Bearer ', '') ?? ''
   const decoded = authService.verifyUserToken(token)
 
@@ -9,15 +10,15 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
     return res.status(401).send({ error: 'Please authentificate' })
   }
 
-  req.body.currentUserId = decoded._id
+  req.currentUserId = decoded._id
 
   return next()
 }
 
 export {
-  auth
+  authentificateUser
 }
 
 export default {
-  auth
+  authentificateUser
 }
