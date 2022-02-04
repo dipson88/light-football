@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllMatches } from '../controllers/mathes'
+import { getAllMatches } from '../controllers/matchController'
 import { authentificateUser } from '../middleware/authMiddleware'
 
 const router = express.Router()

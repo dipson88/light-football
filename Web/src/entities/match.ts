@@ -4,7 +4,6 @@ import { Entity } from 'typeorm'
 export class Match {
   id: number
   utcDate: Date
-  staus: string
   matchday: string
   status: string
   score: Score
@@ -12,7 +11,13 @@ export class Match {
   awayTeam: Team
 
   constructor (match: Match) {
-    Object.assign(this, match)
+    this.id = match.id
+    this.utcDate = match.utcDate
+    this.matchday = match.matchday
+    this.status = match.status
+    this.score = new Score(match.score)
+    this.homeTeam = new Team (match.homeTeam)
+    this.awayTeam = new Team (match.awayTeam)
   }
 }
 
@@ -21,22 +26,39 @@ export class Competition {
   name: string
   code: string
 
-  constructor (match: Match) {
-    Object.assign(this, match)
+  constructor (competition: Competition) {
+    this.id = competition.id
+    this.name = competition.name
+    this.code = competition.code
   }
 }
 
 class Score {
   winner: string
   fullTime: FullTime
+
+  constructor (score: Score) {
+    this.winner = score.winner
+    this.fullTime = score.fullTime
+  }
 }
 
 class FullTime {
   homeTeam: number
   awayTeam: number
+
+  constructor (score: FullTime) {
+    this.homeTeam = score.homeTeam
+    this.homeTeam = score.awayTeam
+  }
 }
 
 class Team {
   id: number
   name: string
+
+  constructor (score: Team) {
+    this.id = score.id
+    this.name = score.name
+  }
 }
