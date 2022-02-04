@@ -4,11 +4,7 @@ import { validate } from 'class-validator'
 
 const createPost = async (data: Omit<Post, 'id'>) => {
   try {
-    const postModel = new Post()
-    postModel.content = data.content
-    postModel.title = data.title
-    postModel.userId = data.userId
-    postModel.matchId = data.matchId
+    const postModel = new Post(data)
     const errors = await validate(postModel)
 
     if (errors.length) {

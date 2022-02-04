@@ -4,11 +4,7 @@ import { validate } from 'class-validator'
 
 const createPrediction = async (data: Omit<Prediction, 'id'>) => {
   try {
-    const predicitionModel = new Prediction()
-    predicitionModel.result = data.result
-    predicitionModel.total = data.total
-    predicitionModel.totalType = data.totalType
-    predicitionModel.postId = data.postId
+    const predicitionModel = new Prediction(data)
     const errors = await validate(predicitionModel)
 
     if (errors.length) {
