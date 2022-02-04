@@ -1,11 +1,11 @@
 import { IRequest, IResponse } from '../interfaces'
-import { IPrediction } from '../entities/predicition'
+import { Prediction } from '../entities/predicition'
 import predicitionService from '../services/predicitionService'
 import postService from '../services/postService'
 
-const createPrediction = async (req: IRequest<IPrediction>, res: IResponse) => {
+const createPrediction = async (req: IRequest<Prediction>, res: IResponse) => {
   const { error: errorPost, data: dataPost } = await postService.getPosts({
-    _id: req.body.postId
+    id: req.body.postId
   })
 
   if (errorPost || !dataPost?.length) {
@@ -23,7 +23,7 @@ const createPrediction = async (req: IRequest<IPrediction>, res: IResponse) => {
   return res.status(201).send(data)
 }
 
-const getPredictions = async (req: IRequest<IPrediction>, res: IResponse) => {
+const getPredictions = async (req: IRequest<Prediction>, res: IResponse) => {
   const { error, data } = await predicitionService.getPredictions({
     ...req.body
   })

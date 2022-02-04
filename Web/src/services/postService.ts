@@ -1,8 +1,8 @@
-import { getMongoManager } from 'typeorm'
-import { IPost, Post } from '../entities/post'
+import { getRepository } from 'typeorm'
+import { Post } from '../entities/post'
 import { validate } from 'class-validator'
 
-const createPost = async (data: Omit<IPost, '_id'>) => {
+const createPost = async (data: Omit<Post, 'id'>) => {
   try {
     const postModel = new Post()
     postModel.content = data.content
@@ -15,8 +15,8 @@ const createPost = async (data: Omit<IPost, '_id'>) => {
       return { error: errors, data: null }
     }
 
-    const manager = getMongoManager()
-    const post = await manager.save(postModel)
+    const repository = getRepository(Post)
+    const post = await repository.save(postModel)
 
     return { error: null, data: post || null }
   } catch (e) {
@@ -24,14 +24,20 @@ const createPost = async (data: Omit<IPost, '_id'>) => {
   }
 }
 
-const getPosts = async (data: Partial<IPost>) => {
+const getPosts = async (data: Partial<Post>) => {
   try {
-    if (data._id && data._id.toString().length !== 24) {
+    if (data.id && data.id.length !== 24) {
       return { error: null, data: [] }
     }
 
-    const manager = getMongoManager()
-    const posts = await manager.find(Post, { ...data })
+    const repository = getRepository(Post)
+    let posts: undefined | Post[] = []
+
+    if (data.id) {
+      posts = await repository.findByIds([data.id])
+    } else {
+      posts = await repository.find({ ...data })
+    }
 
     return { error: null, data: posts || [] }
   } catch (e) {

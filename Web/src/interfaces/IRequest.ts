@@ -1,7 +1,7 @@
 import { Request } from 'express'
-import { ObjectID } from 'typeorm'
+import { User } from '../entities/user'
 
 export interface IRequest<T = unknown> extends Request {
   body: T,
-  currentUserId?: ObjectID
+  currentUser?: User
 }

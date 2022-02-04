@@ -1,8 +1,8 @@
-import { getMongoManager } from 'typeorm'
-import { IPrediction, Prediction } from '../entities/predicition'
+import { getRepository } from 'typeorm'
+import { Prediction } from '../entities/predicition'
 import { validate } from 'class-validator'
 
-const createPrediction = async (data: Omit<IPrediction, '_id'>) => {
+const createPrediction = async (data: Omit<Prediction, 'id'>) => {
   try {
     const predicitionModel = new Prediction()
     predicitionModel.result = data.result
@@ -15,8 +15,8 @@ const createPrediction = async (data: Omit<IPrediction, '_id'>) => {
       return { error: errors, data: null }
     }
 
-    const manager = getMongoManager()
-    const predicition = await manager.save(predicitionModel)
+    const repository = getRepository(Prediction)
+    const predicition = await repository.save(predicitionModel)
 
     return { error: null, data: predicition || null }
   } catch (e) {
@@ -24,14 +24,20 @@ const createPrediction = async (data: Omit<IPrediction, '_id'>) => {
   }
 }
 
-const getPredictions = async (data: Partial<IPrediction>) => {
+const getPredictions = async (data: Partial<Prediction>) => {
   try {
-    if (data._id && data._id.toString().length !== 24) {
+    if (data.id && data.id.length !== 24) {
       return { error: null, data: null }
     }
 
-    const manager = getMongoManager()
-    const predictions = await manager.findOne(Prediction, { ...data })
+    const repository = getRepository(Prediction)
+    let predictions: undefined | Prediction[] = []
+
+    if (data.id) {
+      predictions = await repository.findByIds([data.id])
+    } else {
+      predictions = await repository.find({ ...data })
+    }
 
     return { error: null, data: predictions || [] }
   } catch (e) {

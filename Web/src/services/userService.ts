@@ -1,23 +1,18 @@
-import { getMongoManager } from 'typeorm'
-import { IUser, User } from '../entities/user'
+import { getRepository } from 'typeorm'
+import { User } from '../entities/user'
 import { validate } from 'class-validator'
-import authService from './authService'
 
-const createUser = async (data: Omit<IUser, '_id'>) => {
+const createUser = async (data: Omit<User, 'id'>) => {
   try {
-    const userModel = new User()
-    userModel.email = data.email
-    userModel.password = data.password
-    userModel.name = data.name
+    const userModel = new User(data)
     const errors = await validate(userModel)
 
     if (errors.length) {
       return { error: errors, data: null }
     }
 
-    userModel.password = await authService.getHashedPassword(userModel.password)
-    const manager = getMongoManager()
-    const user = await manager.save(userModel)
+    const repository = getRepository(User)
+    const user = await repository.save(userModel)
 
     return { error: null, data: user || null }
   } catch (e) {
@@ -25,14 +20,21 @@ const createUser = async (data: Omit<IUser, '_id'>) => {
   }
 }
 
-const getUser = async (data: Partial<IUser>) => {
+const getUser = async (data: Partial<User>) => {
   try {
-    if (data._id && data._id.toString().length !== 24) {
+    if (data.id && data.id.length !== 24) {
       return { error: null, data: null }
     }
 
-    const manager = getMongoManager()
-    const user = await manager.findOne(User, { ...data })
+    const repository = getRepository(User)
+    let user: undefined | User
+
+    if (data.id) {
+      const [firstUser] = await repository.findByIds([data.id])
+      user = firstUser
+    } else {
+      user = await repository.findOne({ ...data })
+    }
 
     return { error: null, data: user || null }
   } catch (e) {

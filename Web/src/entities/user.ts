@@ -1,11 +1,10 @@
-import { Entity, Column, ObjectIdColumn, ObjectID, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, Column, BeforeInsert, BeforeUpdate } from 'typeorm'
+import { BaseEntity } from './baseEntity'
 import { IsEmail, Length } from 'class-validator'
+import bcrypt from 'bcryptjs'
 
 @Entity()
-export class User implements IUser {
-  @ObjectIdColumn({ unique: true })
-    _id: ObjectID
-
+export class User extends BaseEntity {
   @Column({ unique: true })
   @IsEmail()
   @Length(0, 40)
@@ -19,16 +18,25 @@ export class User implements IUser {
   @Length(0, 40)
     name: string
 
-  @CreateDateColumn({ type: 'timestamp' })
-    cratedAt: Date
+  @BeforeInsert()
+  @BeforeUpdate()
+  private async getHashedPassword () {
+    this.password = await bcrypt.hash(this.password, 8)
+  }
 
-  @UpdateDateColumn({ type: 'timestamp' })
-    updatedAt: Date
+  constructor (user?: IUserInput) {
+    super()
+
+    if (user) {
+      this.email = user.email
+      this.password = user.password
+      this.name = user.name
+    }
+  }
 }
 
-export interface IUser {
-  _id: ObjectID
-  email: string
+interface IUserInput {
+  email: string,
   password: string
   name: string
 }

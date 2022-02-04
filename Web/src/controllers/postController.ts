@@ -1,15 +1,15 @@
 import { IRequest, IResponse } from '../interfaces'
 import postService from '../services/postService'
-import { IPost } from '../entities/post'
+import { Post } from '../entities/post'
 
-const createPost = async (req: IRequest<IPost>, res: IResponse) => {
-  if (!req.currentUserId) {
+const createPost = async (req: IRequest<Post>, res: IResponse) => {
+  if (!req.currentUser) {
     return res.status(400).send()
   }
 
   const { error, data } = await postService.createPost({
     ...req.body,
-    userId: req.currentUserId
+    userId: req.currentUser.id
   })
 
   if (error || !data) {
@@ -20,11 +20,11 @@ const createPost = async (req: IRequest<IPost>, res: IResponse) => {
 }
 
 const getUserPosts = async (req: IRequest, res: IResponse) => {
-  if (!req.currentUserId) {
+  if (!req.currentUser) {
     return res.status(400).send()
   }
 
-  const userId = req.currentUserId
+  const userId = req.currentUser.id
   const { error, data } = await postService.getPosts({ userId })
 
   if (error) {

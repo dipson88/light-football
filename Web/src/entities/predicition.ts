@@ -1,11 +1,9 @@
-import { Entity, Column, ObjectIdColumn, ObjectID, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, Column } from 'typeorm'
+import { BaseEntity } from './baseEntity'
 import { MatchResultTypes, MatchTotalTypes, MatchTotalValueTypes } from '../utils/enums'
 
 @Entity()
-export class Prediction implements IPrediction {
-  @ObjectIdColumn({ unique: true })
-    _id: ObjectID
-
+export class Prediction extends BaseEntity {
   @Column()
     result: MatchResultTypes
 
@@ -15,20 +13,6 @@ export class Prediction implements IPrediction {
   @Column()
     totalType: MatchTotalTypes
 
-  @ObjectIdColumn({ nullable: false })
-    postId: ObjectID
-
-  @CreateDateColumn({ type: 'timestamp' })
-    cratedAt: Date
-
-  @UpdateDateColumn({ type: 'timestamp' })
-    updatedAt: Date
-}
-
-export interface IPrediction {
-  _id: ObjectID,
-  result: MatchResultTypes
-  total: MatchTotalValueTypes
-  totalType: MatchTotalTypes
-  postId: ObjectID
+  @Column({ nullable: false })
+    postId: string
 }
