@@ -49,11 +49,6 @@ const loginUser = async (req: IRequest<User>, res: IResponse) => {
   })
 }
 
-export {
-  createUser,
-  loginUser
-}
-
 export default {
   createUser,
   loginUser

@@ -52,12 +52,6 @@ const getAllPosts = async (req: IRequest, res: IResponse) => {
   return res.status(200).send(data)
 }
 
-export {
-  createPost,
-  getUserPosts,
-  getAllPosts
-}
-
 export default {
   createPost,
   getUserPosts,

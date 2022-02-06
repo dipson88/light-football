@@ -59,10 +59,6 @@ const getAllMatches = async (req: Request, res: Response) => {
   res.status(200).send({ matches: response.data })
 }
 
-export {
-  getAllMatches
-}
-
 export default {
   getAllMatches
 }
