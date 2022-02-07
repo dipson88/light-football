@@ -4,7 +4,7 @@
     @submit.prevent
   >
     <h2>
-      Login
+      {{ t('login') }}
     </h2>
     <article
       v-if="isErrorMessageExist"
@@ -14,7 +14,7 @@
     </article>
     <section class="login-form__field">
       <label class="login-form__label">
-        Email
+        {{ t('email') }}
       </label>
       <NInput
         v-model:value="email"
@@ -25,7 +25,7 @@
     </section>
     <section class="login-form__field">
       <label class="login-form__label">
-        Password
+        {{ t('password') }}
       </label>
       <NInput
         v-model:value="password"
@@ -40,7 +40,7 @@
       class="login-form__button"
       @click="onSubmit"
     >
-      Login
+      {{ t('login') }}
     </NButton>
   </form>
 </template>
@@ -48,6 +48,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
 import { NButton, NInput } from 'naive-ui'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'LoginForm',
@@ -67,6 +68,7 @@ export default defineComponent({
     }
   },
   setup (props, vm) {
+    const { t } = useI18n()
     const email = ref('')
     const password = ref('')
 
@@ -79,6 +81,7 @@ export default defineComponent({
     }
 
     return {
+      t,
       email,
       password,
       isErrorMessageExist,
