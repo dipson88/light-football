@@ -1,4 +1,5 @@
 import express, { Application } from 'express'
+import compression from 'compression'
 import errorMiddleware from './middleware/errorMiddleware'
 import sendIndexHtml from './middleware/sendFileMiddleware'
 import routers from './routes'
@@ -7,6 +8,7 @@ import { apiFrefixName } from './utils/variables'
 const app: Application = express()
 
 app.use(express.json())
+app.use(compression())
 
 // Set Routers
 routers.forEach(router => {
