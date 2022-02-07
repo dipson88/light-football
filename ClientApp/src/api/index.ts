@@ -1,4 +1,6 @@
 import axios from 'axios'
+import router from '@/router'
+import { enums, routerHelper } from '@/utils'
 
 const appToken = 'app-token'
 
@@ -19,17 +21,46 @@ axios.interceptors.response.use(response => {
 
   return response
 })
+axios.interceptors.response.use(response => response, error => {
+  switch (error.response.status) {
+    case enums.HttpStatuses.Status401: {
+      router.push({ name: routerHelper.names.Login })
+      break
+    }
+    case enums.HttpStatuses.Status404: {
+      router.push({ name: routerHelper.names.Error404 })
+      break
+    }
+    case enums.HttpStatuses.Status500: {
+      router.push({ name: routerHelper.names.Error500 })
+      break
+    }
+  }
+
+  return Promise.reject(error)
+})
 
 const api = {
   authenticate: {
     post: {
       login ({ email, password }: { email: string, password: string }) {
-        return axios.post('users/login', { email, password })
+        return axios.post('auth/login', { email, password })
+      }
+    }
+  },
+  users: {
+    get: {
+      userInfo () {
+        return axios.get('users/info')
       }
     }
   }
 }
 
 export default {
+  api
+}
+
+export {
   api
 }

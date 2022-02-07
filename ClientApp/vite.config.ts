@@ -39,7 +39,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         charset: false,
-        additionalData: '@import "/src/styles/helpers/index.scss";'
+        additionalData: '@import "/src/styles/index.scss";'
       }
     }
   },

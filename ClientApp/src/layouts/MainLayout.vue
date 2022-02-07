@@ -1,20 +1,28 @@
 <template>
   <div class="main-layout">
-    <router-view />
+    <router-view v-if="isUserLoaded" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useMainStore } from '@/store/useMainStore'
 
 export default defineComponent({
   name: 'MainLayout',
   setup () {
-    const store = useMainStore()
+    const mainStore = useMainStore()
+    const { isUserLoaded, userInfo } = storeToRefs(mainStore)
+
+    onMounted(async () => {
+      if (!userInfo.value) {
+        await mainStore.getUserInfo()
+      }
+    })
 
     return {
-      store
+      isUserLoaded
     }
   }
 })
