@@ -90,7 +90,7 @@ export default defineComponent({
   }
 
   &__form {
-    margin: calc(50% - 250px) auto 0 auto;
+    margin: 150px auto 0;
     max-width: 400px;
   }
 }
