@@ -9,6 +9,7 @@ import Error404 from '@/components/errors/Error404.vue'
 import Error500 from '@/components/errors/Error500.vue'
 
 import LoginPage from '@/views/LoginPage/index.vue'
+import CreateUser from '@/views/CreateUser/index.vue'
 import HomePage from '@/views/HomePage/index.vue'
 
 const routerNames = routerHelper.names
@@ -35,6 +36,17 @@ const router = createRouter({
           path: '',
           name: routerNames.Login,
           component: LoginPage
+        }
+      ]
+    },
+    {
+      path: '/create-user',
+      component: LoginLayout,
+      children: [
+        {
+          path: '',
+          name: routerNames.CreateUser,
+          component: CreateUser
         }
       ]
     },

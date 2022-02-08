@@ -4,6 +4,7 @@ export default {
     Error500: 'Error500',
     HelloWorld: 'HelloWorld',
     Home: 'Home',
-    Login: 'Login'
+    Login: 'Login',
+    CreateUser: 'CreateUser'
   }
 }

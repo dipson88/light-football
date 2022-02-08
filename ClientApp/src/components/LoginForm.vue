@@ -63,9 +63,7 @@ export default defineComponent({
     }
   },
   emits: {
-    submit: (model: { email: string, password: string }) => {
-      return model
-    }
+    submit: (model: { email: string, password: string }) => model
   },
   setup (props, vm) {
     const { t } = useI18n()
@@ -96,7 +94,7 @@ export default defineComponent({
   padding: 20px;
   background-color: $color-brand-white;
   border: 1px solid $color-border;
-  box-shadow: rgba(0 0 0 / 30%) 0 19px 38px, rgba(0 0 0 / 22%) 0 15px 12px;
+  box-shadow: $box-shadow-from;
 
   &__field + &__field {
     margin: 10px 0;
@@ -104,6 +102,7 @@ export default defineComponent({
 
   &__error {
     color: $color-brand-danger;
+    font-size: 12px;
   }
 }
 </style>

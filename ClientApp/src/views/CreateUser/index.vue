@@ -1,25 +1,26 @@
 <template>
-  <section class="login-page">
-    <LoginForm
+  <section class="create-user">
+    <CreateUserForm
       :error-message="errorMessage"
-      class="login-page__form"
+      class="create-user__form"
       @submit="onSubmit"
     />
   </section>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, onMounted } from 'vue'
+import { ref, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useLoginStore } from '@/store/useLoginStore'
-import LoginForm from '@/components/LoginForm.vue'
+import CreateUserForm from '@/components/CreateUserForm.vue'
 import { routerHelper } from '@/utils'
 import { useI18n } from 'vue-i18n'
+import { LoginUserInputType } from '@/utils/types'
 
 export default defineComponent({
-  name: 'LoginPage',
+  name: 'CreateUser',
   components: {
-    LoginForm
+    CreateUserForm
   },
   setup () {
     const router = useRouter()
@@ -27,20 +28,14 @@ export default defineComponent({
     const { t } = useI18n()
     const errorMessage = ref('')
 
-    onMounted(async () => {
-      if (loginStore.token) {
-        router.push({ name: routerHelper.names.Home })
-      }
-    })
-
-    const onSubmit = async (model: { email: string, password: string }) => {
-      const isSuccess = await loginStore.login(model)
+    const onSubmit = async (model: LoginUserInputType) => {
+      const isSuccess = await loginStore.createUser(model)
 
       if (isSuccess) {
         errorMessage.value = ''
         router.push({ name: routerHelper.names.Home })
       } else {
-        errorMessage.value = t('we_didnt_recognize_the_email')
+        errorMessage.value = t('this_emai_address_is_already')
       }
     }
 
@@ -53,7 +48,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.login-page {
+.create-user {
   &__form {
     margin: 150px auto 0;
     max-width: 400px;

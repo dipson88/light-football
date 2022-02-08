@@ -2,6 +2,7 @@ import axios from 'axios'
 import router from '@/router'
 import { useLoginStore } from '@/store/useLoginStore'
 import { enums, routerHelper } from '@/utils'
+import { LoginUserInputType } from '@/utils/types'
 
 axios.defaults.baseURL = '/api/'
 axios.interceptors.request.use(request => {
@@ -37,7 +38,7 @@ axios.interceptors.response.use(response => response, error => {
 const api = {
   authenticate: {
     post: {
-      login ({ email, password }: { email: string, password: string }) {
+      login ({ email, password }: Partial<LoginUserInputType>) {
         return axios.post('auth/login', { email, password })
       }
     }
@@ -46,6 +47,11 @@ const api = {
     get: {
       userInfo () {
         return axios.get('users/info')
+      }
+    },
+    post: {
+      createUser (model: LoginUserInputType) {
+        return axios.post('users/create', model)
       }
     }
   }
