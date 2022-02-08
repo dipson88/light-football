@@ -8,6 +8,9 @@ import ErrorLayout from '@/layouts/ErrorLayout.vue'
 import Error404 from '@/components/errors/Error404.vue'
 import Error500 from '@/components/errors/Error500.vue'
 
+import LoginPage from '@/views/LoginPage/index.vue'
+import HomePage from '@/views/HomePage/index.vue'
+
 const routerNames = routerHelper.names
 
 const router = createRouter({
@@ -17,13 +20,23 @@ const router = createRouter({
       path: '/',
       component: MainLayout,
       children: [
-        // TODO add routes
+        {
+          path: '',
+          name: routerNames.Home,
+          component: HomePage
+        }
       ]
     },
     {
       path: '/login',
-      name: routerNames.Login,
-      component: LoginLayout
+      component: LoginLayout,
+      children: [
+        {
+          path: '',
+          name: routerNames.Login,
+          component: LoginPage
+        }
+      ]
     },
     {
       path: '/error',

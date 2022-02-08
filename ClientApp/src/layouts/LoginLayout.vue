@@ -1,68 +1,21 @@
 <template>
   <section class="login-layout">
     <AppHeader class="login-layout__header" />
-    <LoginForm
-      :error-message="errorMessage"
-      class="login-layout__form"
-      @submit="onSubmit"
-    />
+    <router-view />
     <AppFooter class="login-layout__footer" />
   </section>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, onBeforeUnmount, watch, onMounted } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useRouter } from 'vue-router'
-import { useLoginStore } from '@/store/useLoginStore'
+import { defineComponent } from 'vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import LoginForm from '@/components/LoginForm.vue'
-import { useMainStore } from '@/store/useMainStore'
 
 export default defineComponent({
   name: 'LoginLayout',
   components: {
     AppHeader,
-    AppFooter,
-    LoginForm
-  },
-  setup () {
-    const router = useRouter()
-    const loginStore = useLoginStore()
-    const mainStore = useMainStore()
-    const { isSuccessLogin } = storeToRefs(loginStore)
-    const errorMessage = ref('')
-
-    onMounted(async () => {
-      if (!mainStore.userInfo) {
-        await mainStore.getUserInfo()
-
-        if (mainStore.userInfo) {
-          router.push({ path: '/' })
-        }
-      }
-    })
-
-    const onSubmit = async (model: { email: string, password: string }) => {
-      await loginStore.login(model)
-      errorMessage.value = !isSuccessLogin.value
-        ? 'We didn\'t recognize the username or password you entered.'
-        : ''
-    }
-
-    watch(isSuccessLogin, () => {
-      router.push({ path: '/' })
-    })
-
-    onBeforeUnmount(() => {
-      loginStore.clearData()
-    })
-
-    return {
-      onSubmit,
-      errorMessage
-    }
+    AppFooter
   }
 })
 </script>
@@ -87,11 +40,6 @@ export default defineComponent({
 
   &__footer {
     bottom: 0;
-  }
-
-  &__form {
-    margin: 150px auto 0;
-    max-width: 400px;
   }
 }
 </style>

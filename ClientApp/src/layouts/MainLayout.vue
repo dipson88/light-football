@@ -7,17 +7,17 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useMainStore } from '@/store/useMainStore'
+import { useUserStore } from '@/store/useUserStore'
 
 export default defineComponent({
   name: 'MainLayout',
   setup () {
-    const mainStore = useMainStore()
-    const { isUserLoaded, userInfo } = storeToRefs(mainStore)
+    const userStore = useUserStore()
+    const { isUserLoaded, userInfo } = storeToRefs(userStore)
 
     onMounted(async () => {
       if (!userInfo.value) {
-        await mainStore.getUserInfo()
+        await userStore.getUserInfo()
       }
     })
 

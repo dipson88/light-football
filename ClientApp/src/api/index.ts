@@ -1,29 +1,23 @@
 import axios from 'axios'
 import router from '@/router'
+import { useLoginStore } from '@/store/useLoginStore'
 import { enums, routerHelper } from '@/utils'
-
-const appToken = 'app-token'
 
 axios.defaults.baseURL = '/api/'
 axios.interceptors.request.use(request => {
-  const token = localStorage.getItem(appToken)
+  const loginStore = useLoginStore()
 
-  if (request.headers && token) {
-    request.headers.Authorization = `Bearer ${token}`
+  if (request.headers && loginStore.token) {
+    request.headers.Authorization = `Bearer ${loginStore.token}`
   }
 
   return request
 })
-axios.interceptors.response.use(response => {
-  if (response.data.token) {
-    localStorage.setItem(appToken, response.data.token)
-  }
-
-  return response
-})
 axios.interceptors.response.use(response => response, error => {
   switch (error.response.status) {
     case enums.HttpStatuses.Status401: {
+      const loginStore = useLoginStore()
+      loginStore.token = ''
       router.push({ name: routerHelper.names.Login })
       break
     }
