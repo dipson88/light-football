@@ -9,9 +9,9 @@ export default {
     name: 'Name',
     confirm_password: 'Confirm Password',
     create: 'Create',
-    create_user: 'Create User',
+    sign_up: 'Sign Up',
     email: 'Email',
-    login: 'Login',
+    sign_in: 'Sign In',
     password: 'Password',
     we_didnt_recognize_the_email : 'We didn\'t recognize the email or password you entered.'
   },
@@ -25,9 +25,9 @@ export default {
     name: 'name',
     confirm_password: 'confirm_password',
     create: 'Создать',
-    create_user: 'Создание пользователя',
+    sign_up: 'Создание пользователя',
     email: 'Почта',
-    login: 'Вход',
+    sign_in: 'Вход',
     password: 'Пароль',
     we_didnt_recognize_the_email: 'Мы не смогли распознать введенный почту или пароль.'
   }

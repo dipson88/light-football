@@ -29,7 +29,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/login',
+      path: '/sign-in',
       component: LoginLayout,
       children: [
         {
@@ -40,7 +40,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/create-user',
+      path: '/sign-up',
       component: LoginLayout,
       children: [
         {

@@ -4,6 +4,7 @@
       :error-message="errorMessage"
       class="login-page__form"
       @submit="onSubmit"
+      @create="onCreate"
     />
   </section>
 </template>
@@ -43,8 +44,12 @@ export default defineComponent({
         errorMessage.value = t('we_didnt_recognize_the_email')
       }
     }
+    const onCreate = async () => {
+      router.push({ name: routerHelper.names.CreateUser })
+    }
 
     return {
+      onCreate,
       onSubmit,
       errorMessage
     }

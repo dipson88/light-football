@@ -4,7 +4,7 @@
     @submit.prevent
   >
     <h2>
-      {{ t('login') }}
+      {{ t('sign_in') }}
     </h2>
     <article
       v-if="isErrorMessageExist"
@@ -40,7 +40,15 @@
       class="login-form__button"
       @click="onSubmit"
     >
-      {{ t('login') }}
+      {{ t('sign_in') }}
+    </NButton>
+    <NButton
+      text
+      type="info"
+      class="login-form__link"
+      @click="onCreate"
+    >
+      {{ t('sign_up') }}
     </NButton>
   </form>
 </template>
@@ -63,7 +71,8 @@ export default defineComponent({
     }
   },
   emits: {
-    submit: (model: { email: string, password: string }) => model
+    submit: (model: { email: string, password: string }) => model,
+    create: (e: Event) => e
   },
   setup (props, vm) {
     const { t } = useI18n()
@@ -77,13 +86,17 @@ export default defineComponent({
     const onSubmit = () => {
       vm.emit('submit', { email: email.value, password: password.value })
     }
+    const onCreate = (e: Event) => {
+      vm.emit('create', e)
+    }
 
     return {
       t,
       email,
       password,
       isErrorMessageExist,
-      onSubmit
+      onSubmit,
+      onCreate
     }
   }
 })
@@ -103,6 +116,12 @@ export default defineComponent({
   &__error {
     color: $color-brand-danger;
     font-size: 12px;
+  }
+
+  &__link {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
   }
 }
 </style>

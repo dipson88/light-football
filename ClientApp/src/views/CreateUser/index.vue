@@ -4,6 +4,7 @@
       :error-message="errorMessage"
       class="create-user__form"
       @submit="onSubmit"
+      @login="onLogin"
     />
   </section>
 </template>
@@ -38,9 +39,13 @@ export default defineComponent({
         errorMessage.value = t('this_emai_address_is_already')
       }
     }
+    const onLogin = async () => {
+      router.push({ name: routerHelper.names.Login })
+    }
 
     return {
       onSubmit,
+      onLogin,
       errorMessage
     }
   }
