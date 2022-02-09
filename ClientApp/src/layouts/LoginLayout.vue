@@ -1,9 +1,9 @@
 <template>
-  <section class="login-layout">
+  <main class="login-layout">
     <AppHeader class="login-layout__header" />
     <router-view />
     <AppFooter class="login-layout__footer" />
-  </section>
+  </main>
 </template>
 
 <script lang="ts">

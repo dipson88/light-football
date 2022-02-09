@@ -1,16 +1,24 @@
 <template>
-  <div class="main-layout">
+  <main class="main-layout">
+    <AppHeader class="main-layout__header" />
     <router-view v-if="isUserLoaded" />
-  </div>
+    <AppFooter class="main-layout__footer" />
+  </main>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/useUserStore'
+import AppHeader from '@/components/AppHeader.vue'
+import AppFooter from '@/components/AppFooter.vue'
 
 export default defineComponent({
   name: 'MainLayout',
+  components: {
+    AppHeader,
+    AppFooter
+  },
   setup () {
     const userStore = useUserStore()
     const { isUserLoaded, userInfo } = storeToRefs(userStore)
@@ -27,3 +35,27 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+.main-layout {
+  height: 100%;
+  box-sizing: border-box;
+  padding: $height-header 0 $height-footer 0;
+
+  &__header,
+  &__footer {
+    position: fixed;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 0 10px;
+  }
+
+  &__header {
+    top: 0;
+  }
+
+  &__footer {
+    bottom: 0;
+  }
+}
+</style>
