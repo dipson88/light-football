@@ -11,7 +11,7 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "lint:all": "eslint src/**/*.ts && tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "cd .. && husky install Web/.husky"
+    "postinstall": "cd .. && husky install Web/.husky"
   },
   "repository": {
     "type": "git",

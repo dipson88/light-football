@@ -11,7 +11,7 @@ const PORT = process.env.PORT
 const startApp = async () => {
   await db.setDbConnection(process.env.MONGODB_URL)
   app.listen(PORT, () => {
-    console.log(`Server is runnung on port ${PORT}`)
+    console.log(`Server is runnung on port http://localhost:${PORT}`)
   })
 }
 

@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "node Web/dist/index.js",
-    "build": "cd ClientApp && npm i && npm run build && cd ../Web && npm i && tsc"
+    "install": "cd ClientApp && npm i && cd ../Web && npm i",
+    "build": "cd ClientApp && npm run build && cd ../Web && tsc"
   }
 }

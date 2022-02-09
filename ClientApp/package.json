@@ -10,7 +10,7 @@
     "lint:style": "stylelint src/**/*.{css,scss,vue}",
     "lint:type": "vue-tsc --noEmit",
     "lint:all": "eslint \"**/*.{vue,ts,js}\" && stylelint src/**/*.{css,scss,vue} && vue-tsc --noEmit",
-    "prepare": "cd .. && husky install ClientApp/.husky"
+    "postinstall": "cd .. && husky install ClientApp/.husky"
   },
   "dependencies": {
     "@vuelidate/core": "^2.0.0-alpha.34",
