@@ -34,6 +34,19 @@ const getCompetitionInfo = (data: { competition: Competition }) => {
 const getAllMatches = async (req: Request, res: Response) => {
   const testData = getTestData()
 
+  // TODO add create all matches method
+  // const response1 = await axios.get('http://api.football-data.org/v2/competitions/FL1/teams', {
+  //   headers: {
+  //     'X-Auth-Token':  process.env.FOOTBAL_DATA_KEY ?? ''
+  //   },
+  //   params: {
+  //     // www.football-data.org/documentation/api#filters
+  //     // competitions: 'FL1',
+  //     // matchday: 1,
+  //     season: '2021'
+  //   }
+  // })
+
   if (testData) {
     return res.status(200).send({
       competition: getCompetitionInfo(testData),
