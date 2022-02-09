@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "lint:script": "eslint \"**/*.{vue,ts,js}\"",
     "lint:style": "stylelint src/**/*.{css,scss,vue}",
-    "lint:type": "vue-tsc --noEmit",
+    "lint:type": "tsc --noEmit",
     "lint:all": "eslint \"**/*.{vue,ts,js}\" && stylelint src/**/*.{css,scss,vue} && vue-tsc --noEmit",
     "prepare": "cd .. && husky install ClientApp/.husky"
   },
