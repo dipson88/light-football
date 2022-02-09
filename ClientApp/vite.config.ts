@@ -44,6 +44,6 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: '../Web/src/public'
+    outDir: '../Web/dist/public'
   }
 })
