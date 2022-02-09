@@ -54,6 +54,13 @@ const api = {
         return axios.post('users/create', model)
       }
     }
+  },
+  matches: {
+    get: {
+      allMatches () {
+        return axios.get('matches/all')
+      }
+    }
   }
 }
 

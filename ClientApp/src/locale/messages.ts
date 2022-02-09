@@ -1,5 +1,6 @@
 export default {
   en: {
+    no_data_to_display: 'No data to display.',
     this_emai_address_is_already: 'This email address is already being used.',
     this_field_is_required: 'This field is required.',
     length_should_be_less_than: 'Length should be less than {length}',
@@ -16,6 +17,7 @@ export default {
     we_didnt_recognize_the_email : 'We didn\'t recognize the email or password you entered.'
   },
   ru: {
+    no_data_to_display: 'no_data_to_display',
     this_emai_address_is_already: 'this_emai_address_is_already',
     this_field_is_required: 'this_field_is_required',
     length_should_be_less_than: 'length_should_be_less_than',

@@ -1,7 +1,15 @@
 <template>
   <main class="main-layout">
     <AppHeader class="main-layout__header" />
-    <router-view v-if="isUserLoaded" />
+    <Suspense>
+      <template #default>
+        <router-view v-if="isUserLoaded" />
+      </template>
+      <template #fallback>
+        <span>Loading...</span>
+      </template>
+    </Suspense>
+
     <AppFooter class="main-layout__footer" />
   </main>
 </template>

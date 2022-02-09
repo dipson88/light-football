@@ -27,7 +27,7 @@ export type MatchType = {
   }
 }
 
-export type Competition = {
+export type CompetitionType = {
   id: number
   name: string
   code: string

@@ -1,17 +1,35 @@
 <template>
   <section class="home-page">
-    <MatchList class="home-page__matches" />
+    <MatchList
+      :header-text="competitionHeader"
+      :matches="matches"
+      class="home-page__matches"
+    />
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import MatchList from '@/components/matches/MatchList.vue'
+import { useMatchesStore } from '@/store/useMatchesStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'HomePage',
   components: {
     MatchList
+  },
+  async setup () {
+    const matchesStore = useMatchesStore()
+    const { matches, competition } = storeToRefs(matchesStore)
+    await matchesStore.getMatches()
+
+    console.log(matches.value)
+
+    return {
+      competitionHeader: competition.value?.name,
+      matches
+    }
   }
 })
 </script>
@@ -20,7 +38,7 @@ export default defineComponent({
 .home-page {
   &__matches {
     max-width: 700px;
-    margin: 0 auto;
+    margin: 40px auto 0;
   }
 }
 </style>
