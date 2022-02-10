@@ -100,16 +100,22 @@ export default defineComponent({
     white-space: nowrap;
     width: calc(50% - 2px);
 
-    .match-item-team__name {
-      margin-right: 5px;
+    .match-item-team {
+      &__logo {
+        margin: 0 5px;
+      }
     }
   }
 
   &__team-info + &__team-info {
     flex-direction: row-reverse;
 
-    .match-item-team__name {
-      margin-left: 5px;
+    .match-item-team {
+      flex-direction: row-reverse;
+
+      &__logo {
+        margin: 0 5px;
+      }
     }
   }
 

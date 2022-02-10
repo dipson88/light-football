@@ -19,11 +19,15 @@ export type MatchType = {
   }
   homeTeam: {
     id: number
-    name: string
+    name: string,
+    shortName: string,
+    crestUrl: string
   }
   awayTeam: {
     id: number
-    name: string
+    name: string,
+    shortName: string,
+    crestUrl: string
   }
 }
 

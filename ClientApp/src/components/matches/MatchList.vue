@@ -59,13 +59,13 @@ export default defineComponent({
         id: m.id,
         status: m.status,
         stage: m.matchday,
-        homeTeamName: m.homeTeam.name,
-        homeTeamLogo: '',
+        homeTeamName: m.homeTeam.shortName,
+        homeTeamLogo: m.homeTeam.crestUrl,
         homeTeamScore: m.score.fullTime.homeTeam,
-        awayTeamName: m.awayTeam.name,
-        awayTeamLogo: '',
+        awayTeamName: m.awayTeam.shortName,
+        awayTeamLogo: m.awayTeam.crestUrl,
         awayTeamScore: m.score.fullTime.awayTeam,
-        isStarted: false
+        isStarted: true
       }))
     })
     const isMatchesExist = computed(() => {
