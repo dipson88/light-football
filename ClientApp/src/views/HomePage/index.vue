@@ -24,8 +24,6 @@ export default defineComponent({
     const { matches, competition } = storeToRefs(matchesStore)
     await matchesStore.getMatches()
 
-    console.log(matches.value)
-
     return {
       competitionHeader: competition.value?.name,
       matches
