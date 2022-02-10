@@ -17,14 +17,14 @@
         />
       </div>
       <div class="match-item__team-info">
+        <MatchItemTeam
+          :team-name="awayTeamName"
+          :logo="awayTeamLogo"
+        />
         <MatchItemScore
           :score="awayTeamScore"
           :is-started="isStarted"
           class="match-item__score"
-        />
-        <MatchItemTeam
-          :team-name="awayTeamName"
-          :logo="awayTeamLogo"
         />
       </div>
     </div>
@@ -96,22 +96,29 @@ export default defineComponent({
 
   &__team-info {
     display: flex;
-    align-items: center;
+    justify-content: flex-end;
+    white-space: nowrap;
+    width: calc(50% - 2px);
+
+    .match-item-team__name {
+      margin-right: 5px;
+    }
+  }
+
+  &__team-info + &__team-info {
+    flex-direction: row-reverse;
+
+    .match-item-team__name {
+      margin-left: 5px;
+    }
   }
 
   &__main-info {
     display: flex;
-    justify-content: center;
-    max-width: 450px;
+    align-items: center;
+    justify-content: space-between;
     overflow: hidden;
-  }
-
-  &__score:nth-child(1) {
-    margin: 0 5px 0 0;
-  }
-
-  &__score:nth-child(2) {
-    margin: 0 2px 0 5px;
+    width: 100%;
   }
 
   &__status,
