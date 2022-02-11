@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { writeFile, readFileSync } from 'fs'
 import { Competition, Match, MatchTeam } from '../entities/match'
+import { MatchSatuses, MatchSatusFilterTypes } from '../utils/enums'
 
 // TODO: Test data
 const saveTestData = (data: unknown, fileName: string) => {
@@ -29,11 +30,15 @@ const callFootballApi = async ({ apiString, params }: { apiString: string, param
   })
 }
 
-const getAllMatchesFromApi = async (teams: MatchTeam[]) => {
+const getAllMatchesFromApi = async (teams: MatchTeam[], filterType: MatchSatusFilterTypes) => {
   const testData = getTestData('testMatchesData.json')
 
   if (testData) {
-    return mapCurrentMatches(testData.matches, testData.competition, teams)
+    return mapCurrentMatches(
+      testData.matches,
+      testData.competition,
+      teams,
+      filterType)
   }
 
   const response = await callFootballApi({
@@ -45,7 +50,11 @@ const getAllMatchesFromApi = async (teams: MatchTeam[]) => {
 
   saveTestData(response.data, 'testMatchesData.json')
 
-  return mapCurrentMatches(response.data.matches, response.data.competition, teams)
+  return mapCurrentMatches(
+    response.data.matches,
+    response.data.competition,
+    teams,
+    filterType)
 }
 
 const getAllTeamsFromApi = async () => {
@@ -67,18 +76,11 @@ const getAllTeamsFromApi = async () => {
   return mapTeams(response.data.teams)
 }
 
-const getMatches = async () => {
-  const teams = await getAllTeamsFromApi()
-  const matches = await getAllMatchesFromApi(teams)
-
-  return matches
-}
-
 const mapTeams = (teams: MatchTeam[]) => {
   return teams.map(team => new MatchTeam(team))
 }
 
-const mapCurrentMatches = (currMatches: Match[], competition: Competition, teams: MatchTeam[]) => {
+const mapCurrentMatches = (currMatches: Match[], competition: Competition, teams: MatchTeam[], filterType: MatchSatusFilterTypes) => {
   const matches = currMatches.map(match => {
     const homeTeam = teams.find(team => team.id === match.homeTeam.id)
     const awayTeam = teams.find(team => team.id === match.awayTeam.id)
@@ -94,11 +96,38 @@ const mapCurrentMatches = (currMatches: Match[], competition: Competition, teams
     return new Match(match)
   })
 
+  const mappedCompetition = new Competition(competition)
+  const filteredMatches = filterMatches(matches, filterType)
+    .sort((a, b) => a.matchday - b.matchday)
+
   return {
-    // TODO remove slice
-    matches: matches.sort((a, b) => a.matchday - b.matchday).slice(0, 30),
-    competition: new Competition(competition)
+    competition: mappedCompetition,
+    matches: filteredMatches
   }
+}
+
+const filterMatches = (matches: Match[], filterType: MatchSatusFilterTypes) => {
+  switch (filterType) {
+    case MatchSatusFilterTypes.UPCOMING: {
+      return matches.filter(m => m.status === MatchSatuses.SCHEDULED)
+    }
+    case MatchSatusFilterTypes.FINISHED: {
+      return matches.filter(m => m.status === MatchSatuses.FINISHED)
+    }
+    case MatchSatusFilterTypes.CURRENT: {
+      return matches.filter(m => m.matchday === m.season.currentMatchday)
+    }
+    default: {
+      return []
+    }
+  }
+}
+
+const getMatches = async (filterType: MatchSatusFilterTypes) => {
+  const teams = await getAllTeamsFromApi()
+  const matches = await getAllMatchesFromApi(teams, filterType)
+
+  return matches
 }
 
 export default {

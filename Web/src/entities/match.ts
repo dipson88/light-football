@@ -10,6 +10,7 @@ export class Match {
   score: Score
   homeTeam: MatchTeam
   awayTeam: MatchTeam
+  season: Season
 
   constructor (match: Match) {
     this.id = match.id
@@ -19,6 +20,7 @@ export class Match {
     this.score = new Score(match.score)
     this.homeTeam = new MatchTeam (match.homeTeam)
     this.awayTeam = new MatchTeam (match.awayTeam)
+    this.season = new Season (match.season)
   }
 }
 
@@ -31,6 +33,20 @@ export class Competition {
     this.id = competition.id
     this.name = competition.name
     this.code = competition.code
+  }
+}
+
+class Season {
+  id: number
+  startDate: string
+  endDate: string
+  currentMatchday: number
+
+  constructor (season: Season) {
+    this.id = season.id
+    this.startDate = season.startDate
+    this.endDate = season.endDate
+    this.currentMatchday = season.currentMatchday
   }
 }
 

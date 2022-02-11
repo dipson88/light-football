@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response, ErrorRequestHandler } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { apiFrefixName } from '../utils/variables'
 
-const errorHandler = (error: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
+const errorHandler = (error: Error, req: Request, res: Response, next: NextFunction) => {
   if (!error) {
     return next()
   }
