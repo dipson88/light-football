@@ -1,11 +1,12 @@
 import { Entity } from 'typeorm'
+import { MatchSatuses } from '../utils/enums'
 
 @Entity()
 export class Match {
   id: number
   utcDate: Date
   matchday: number
-  status: string
+  status: MatchSatuses
   score: Score
   homeTeam: MatchTeam
   awayTeam: MatchTeam

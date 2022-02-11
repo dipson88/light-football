@@ -3,6 +3,7 @@ import router from '@/router'
 import { useLoginStore } from '@/store/useLoginStore'
 import { enums, routerHelper } from '@/utils'
 import { LoginUserInputType } from '@/utils/types'
+import { MatchSatusFilterTypes } from '@/utils/enums'
 
 axios.defaults.baseURL = '/api/'
 axios.interceptors.request.use(request => {
@@ -57,8 +58,8 @@ const api = {
   },
   matches: {
     get: {
-      allMatches () {
-        return axios.get('matches/all')
+      allMatches (filterType: MatchSatusFilterTypes) {
+        return axios.get('matches/all', { params: { filterType } })
       }
     }
   }

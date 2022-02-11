@@ -1,3 +1,5 @@
+import { MatchSatuses } from './enums'
+
 export type LoginUserInputType = {
   name: string
   email: string
@@ -9,7 +11,7 @@ export type MatchType = {
   id: number
   utcDate: Date
   matchday: string
-  status: string
+  status: MatchSatuses
   score: {
     winner: string
     fullTime: {

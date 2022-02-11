@@ -10,7 +10,7 @@ import Error500 from '@/components/errors/Error500.vue'
 
 import LoginPage from '@/views/LoginPage/index.vue'
 import CreateUser from '@/views/CreateUser/index.vue'
-import HomePage from '@/views/HomePage/index.vue'
+import MatchesPage from '@/views/MatchesPage/index.vue'
 
 const routerNames = routerHelper.names
 
@@ -24,7 +24,7 @@ const router = createRouter({
         {
           path: '',
           name: routerNames.Home,
-          component: HomePage
+          component: MatchesPage
         }
       ]
     },

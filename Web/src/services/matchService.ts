@@ -96,7 +96,7 @@ const mapCurrentMatches = (currMatches: Match[], competition: Competition, teams
 
   return {
     // TODO remove slice
-    matches: matches.sort((a, b) => a.matchday - b.matchday).slice(0, 10),
+    matches: matches.sort((a, b) => a.matchday - b.matchday).slice(0, 30),
     competition: new Competition(competition)
   }
 }

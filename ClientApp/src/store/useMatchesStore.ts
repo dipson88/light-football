@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { api } from '@/api'
 import { MatchType, CompetitionType } from '@/utils/types'
+import { MatchSatusFilterTypes } from '@/utils/enums'
 
 export const useMatchesStore = defineStore('matches', {
   state: (): {
@@ -11,9 +12,9 @@ export const useMatchesStore = defineStore('matches', {
     competition: null
   }),
   actions: {
-    async getMatches () {
+    async getMatches (filterType: MatchSatusFilterTypes) {
       try {
-        const response = await api.matches.get.allMatches()
+        const response = await api.matches.get.allMatches(filterType)
         this.matches = response.data.matches ?? []
         this.competition = response.data.competition ?? null
       } catch {

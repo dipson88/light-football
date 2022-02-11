@@ -35,6 +35,8 @@ import { defineComponent, PropType, computed } from 'vue'
 import MatchItem from './MatchItem.vue'
 import { MatchType } from '@/utils/types'
 import { useI18n } from 'vue-i18n'
+import { dateFormatters } from '@/utils'
+import { MatchSatuses } from '@/utils/enums'
 
 export default defineComponent({
   name: 'MatchList',
@@ -57,15 +59,15 @@ export default defineComponent({
     const mappedMatches = computed(() => {
       return props.matches.map(m => ({
         id: m.id,
-        status: m.status,
-        stage: m.matchday,
+        status: dateFormatters.toLocaleDate(m.utcDate.toString()),
+        stage: t('round', { nummber: m.matchday }),
         homeTeamName: m.homeTeam.shortName,
         homeTeamLogo: m.homeTeam.crestUrl,
         homeTeamScore: m.score.fullTime.homeTeam,
         awayTeamName: m.awayTeam.shortName,
         awayTeamLogo: m.awayTeam.crestUrl,
         awayTeamScore: m.score.fullTime.awayTeam,
-        isStarted: true
+        isStarted: m.status !== MatchSatuses.SCHEDULED
       }))
     })
     const isMatchesExist = computed(() => {
@@ -85,19 +87,11 @@ export default defineComponent({
 .match-list {
   &__item {
     font-size: 12px;
-    background-color: $color-brand-gray;
+    background-color: darken($color-brand-white, 5%);
     cursor: pointer;
 
     &:hover {
-      background-color: lighten($color-brand-gray, 3%);
-    }
-
-    &:nth-child(2n) {
-      background-color: $color-brand-white;
-
-      &:hover {
-        background-color: darken($color-brand-white, 3%);
-      }
+      background-color: darken($color-brand-white, 3%);
     }
   }
 

@@ -129,8 +129,16 @@ export default defineComponent({
 
   &__status,
   &__stage {
-    text-align: center;
     color: $color-brand-gray-dark;
+    min-width: 100px;
+  }
+
+  &__stage {
+    text-align: center;
+  }
+
+  &__status {
+    text-align: left;
   }
 }
 </style>

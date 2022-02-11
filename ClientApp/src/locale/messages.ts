@@ -1,5 +1,9 @@
 export default {
   en: {
+    current: 'Current',
+    upcoming: 'Upcoming',
+    finished: 'Finished',
+    round: 'Round {number}',
     no_data_to_display: 'No data to display.',
     this_emai_address_is_already: 'This email address is already being used.',
     this_field_is_required: 'This field is required.',
@@ -17,6 +21,10 @@ export default {
     we_didnt_recognize_the_email : 'We didn\'t recognize the email or password you entered.'
   },
   ru: {
+    current: 'current',
+    upcoming: 'upcoming',
+    finished: 'finished',
+    round: 'round',
     no_data_to_display: 'no_data_to_display',
     this_emai_address_is_already: 'this_emai_address_is_already',
     this_field_is_required: 'this_field_is_required',

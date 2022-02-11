@@ -1,12 +1,15 @@
 import routerHelper from './routerHelper'
 import enums from './enums'
+import dateFormatters from './dateFormatters'
 
 export default {
   routerHelper,
-  enums
+  enums,
+  dateFormatters
 }
 
 export {
   routerHelper,
-  enums
+  enums,
+  dateFormatters
 }
