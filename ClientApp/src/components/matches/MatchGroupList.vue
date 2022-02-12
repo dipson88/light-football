@@ -6,6 +6,7 @@
         :key="group.header"
         :header-text="group.header"
         :matches="group.matches"
+        @match-select="onMatchSelect"
       />
     </template>
     <div
@@ -34,10 +35,20 @@ export default defineComponent({
       default: () => []
     }
   },
-  setup () {
+  emits: {
+    'match-select': (id: number) => id
+  },
+  setup (props, vm) {
     const { t } = useI18n()
 
-    return { t }
+    const onMatchSelect = (id: number) => {
+      vm.emit('match-select', id)
+    }
+
+    return {
+      t,
+      onMatchSelect
+    }
   }
 })
 </script>

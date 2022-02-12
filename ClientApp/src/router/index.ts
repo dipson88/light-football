@@ -11,6 +11,7 @@ import Error500 from '@/components/errors/Error500.vue'
 import LoginPage from '@/views/LoginPage/index.vue'
 import CreateUser from '@/views/CreateUser/index.vue'
 import MatchesPage from '@/views/MatchesPage/index.vue'
+import MatchPage from '@/views/MatchPage/index.vue'
 
 const routerNames = routerHelper.names
 
@@ -25,6 +26,12 @@ const router = createRouter({
           path: '',
           name: routerNames.Home,
           component: MatchesPage
+        },
+        {
+          path: 'match/:id',
+          name: routerNames.Match,
+          component: MatchPage,
+          props: true
         }
       ]
     },

@@ -10,6 +10,7 @@
     <MatchGroupList
       :groups="groups"
       class="matches-page__matches"
+      @match-select="onMatchSelect"
     />
   </section>
 </template>
@@ -21,7 +22,9 @@ import MatchesControls from './MatchesControls.vue'
 
 import { useMatchesStore } from '@/store/useMatchesStore'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 import { MatchType } from '@/utils/types'
+import { routerHelper } from '@/utils'
 import i18n from '@/locale'
 import { MatchSatusFilterTypes } from '@/utils/enums'
 
@@ -51,6 +54,7 @@ export default defineComponent({
     MatchesControls
   },
   async setup () {
+    const router = useRouter()
     const matchesStore = useMatchesStore()
     const { matches, competition } = storeToRefs(matchesStore)
     const selectedType = ref(MatchSatusFilterTypes.CURRENT)
@@ -64,12 +68,19 @@ export default defineComponent({
       selectedType.value = type
       await matchesStore.getMatches(selectedType.value)
     }
+    const onMatchSelect = (id: number) => {
+      router.push({
+        name: routerHelper.names.Match,
+        params: { id }
+      })
+    }
 
     return {
       competitionHeader: competition.value?.name,
       groups,
       selectedType,
-      onSelectType
+      onSelectType,
+      onMatchSelect
     }
   }
 })

@@ -19,6 +19,7 @@
         :away-team-score="match.awayTeamScore"
         :match-satus="match.matchSatus"
         class="match-list__item"
+        @click="onMatchSelect(match.id)"
       />
     </template>
     <div
@@ -52,7 +53,10 @@ export default defineComponent({
       default: ''
     }
   },
-  setup (props) {
+  emits: {
+    'match-select': (id: number) => id
+  },
+  setup (props, vm) {
     const { t } = useI18n()
 
     const mappedMatches = computed(() => {
@@ -73,10 +77,15 @@ export default defineComponent({
       return !!mappedMatches.value.length
     })
 
+    const onMatchSelect = (id: number) => {
+      vm.emit('match-select', id)
+    }
+
     return {
       t,
       mappedMatches,
-      isMatchesExist
+      isMatchesExist,
+      onMatchSelect
     }
   }
 })

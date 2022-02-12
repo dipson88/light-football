@@ -5,6 +5,7 @@ export default {
     HelloWorld: 'HelloWorld',
     Home: 'Home',
     Login: 'Login',
-    CreateUser: 'CreateUser'
+    CreateUser: 'CreateUser',
+    Match: 'Match'
   }
 }
