@@ -1,11 +1,15 @@
 <template>
-  <div class="match-item-score">
+  <div
+    :class="{ 'match-item-score--in-play': isInPlay }"
+    class="match-item-score"
+  >
     {{ formattedScore }}
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, PropType } from 'vue'
+import { MatchSatuses } from '@/utils/enums'
 
 export default defineComponent({
   name: 'MatchItemScore',
@@ -14,17 +18,23 @@ export default defineComponent({
       type: Number,
       default: 0
     },
-    isStarted: {
-      type: Boolean,
-      default: false
+    matchSatus: {
+      type: String as PropType<MatchSatuses>,
+      default: MatchSatuses.SCHEDULED
     }
   },
   setup (props) {
     const formattedScore = computed(() => {
-      return props.isStarted ? props.score : '-'
+      return props.matchSatus !== MatchSatuses.SCHEDULED ? props.score : '-'
+    })
+    const isInPlay = computed(() => {
+      return props.matchSatus === MatchSatuses.IN_PLAY
     })
 
-    return { formattedScore }
+    return {
+      formattedScore,
+      isInPlay
+    }
   }
 })
 </script>
@@ -37,5 +47,9 @@ export default defineComponent({
   line-height: 20px;
   width: 20px;
   height: 20px;
+
+  &--in-play {
+    background-color: $color-live;
+  }
 }
 </style>

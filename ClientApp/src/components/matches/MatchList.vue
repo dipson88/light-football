@@ -17,7 +17,7 @@
         :away-team-name="match.awayTeamName"
         :away-team-logo="match.awayTeamLogo"
         :away-team-score="match.awayTeamScore"
-        :is-started="match.isStarted"
+        :match-satus="match.matchSatus"
         class="match-list__item"
       />
     </template>
@@ -36,7 +36,6 @@ import MatchItem from './MatchItem.vue'
 import { MatchType } from '@/utils/types'
 import { useI18n } from 'vue-i18n'
 import { dateFormatters } from '@/utils'
-import { MatchSatuses } from '@/utils/enums'
 
 export default defineComponent({
   name: 'MatchList',
@@ -60,14 +59,14 @@ export default defineComponent({
       return props.matches.map(m => ({
         id: m.id,
         status: dateFormatters.toLocaleDate(m.utcDate.toString()),
-        stage: t('round', { nummber: m.matchday }),
+        stage: t('round', { number: m.matchday }),
         homeTeamName: m.homeTeam.shortName,
         homeTeamLogo: m.homeTeam.crestUrl,
         homeTeamScore: m.score.fullTime.homeTeam,
         awayTeamName: m.awayTeam.shortName,
         awayTeamLogo: m.awayTeam.crestUrl,
         awayTeamScore: m.score.fullTime.awayTeam,
-        isStarted: m.status !== MatchSatuses.SCHEDULED
+        matchSatus: m.status
       }))
     })
     const isMatchesExist = computed(() => {

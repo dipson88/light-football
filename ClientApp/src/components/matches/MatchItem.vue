@@ -12,7 +12,7 @@
         />
         <MatchItemScore
           :score="homeTeamScore"
-          :is-started="isStarted"
+          :match-satus="matchSatus"
           class="match-item__score"
         />
       </div>
@@ -23,7 +23,7 @@
         />
         <MatchItemScore
           :score="awayTeamScore"
-          :is-started="isStarted"
+          :match-satus="matchSatus"
           class="match-item__score"
         />
       </div>
@@ -36,9 +36,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import MatchItemTeam from './MatchItemTeam.vue'
 import MatchItemScore from './MatchItemScore.vue'
+import { MatchSatuses } from '@/utils/enums'
 
 export default defineComponent({
   name: 'MatchItem',
@@ -79,9 +80,9 @@ export default defineComponent({
       type: Number,
       default: 0
     },
-    isStarted: {
-      type: Boolean,
-      default: false
+    matchSatus: {
+      type: String as PropType<MatchSatuses>,
+      default: MatchSatuses.SCHEDULED
     }
   }
 })

@@ -11,9 +11,13 @@ const getAllMatches = async (req: Request, res: Response) => {
     return res.status(200).send([])
   }
 
-  const matches = await matchService.getMatches(filterType)
+  const { error, data } = await matchService.getMatches(filterType)
 
-  return res.status(200).send(matches)
+  if (error) {
+    return res.status(400).send(error)
+  }
+
+  return res.status(200).send(data)
 }
 
 export default {

@@ -1,6 +1,6 @@
 enum HttpStatuses { Status401 = 401, Status404 = 404, Status500 = 500 }
 enum Locales { EN = 'en', RU = 'ru' }
-enum MatchSatuses { FINISHED = 'FINISHED', SCHEDULED = 'SCHEDULED' }
+enum MatchSatuses { IN_PLAY = 'IN_PLAY', PAUSED = 'PAUSED', FINISHED = 'FINISHED', SCHEDULED = 'SCHEDULED' }
 enum MatchSatusFilterTypes { CURRENT = 1, UPCOMING = 2, FINISHED = 3 }
 
 export default {

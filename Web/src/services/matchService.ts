@@ -5,7 +5,6 @@ import { MatchSatuses, MatchSatusFilterTypes } from '../utils/enums'
 
 // TODO: Test data
 const saveTestData = async (data: unknown, fileName: string) => {
-  console.log(fileName)
   const json = JSON.stringify(data)
 
   if (!existsSync('testData')) {
@@ -128,10 +127,14 @@ const filterMatches = (matches: Match[], filterType: MatchSatusFilterTypes) => {
 }
 
 const getMatches = async (filterType: MatchSatusFilterTypes) => {
-  const teams = await getAllTeamsFromApi()
-  const matches = await getAllMatchesFromApi(teams, filterType)
+  try {
+    const teams = await getAllTeamsFromApi()
+    const matches = await getAllMatchesFromApi(teams, filterType)
 
-  return matches
+    return { error: null, data: matches || [] }
+  } catch (error) {
+    return { error: error, data: null }
+  }
 }
 
 export default {
