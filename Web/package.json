@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "build": "tsc",
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts --ignore 'testData/*'",
     "lint:script": "eslint src/**/*.ts",
     "lint:type": "tsc --noEmit",
     "lint:fix": "eslint src/**/*.ts --fix",

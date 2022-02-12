@@ -1,19 +1,23 @@
 import axios from 'axios'
-import { writeFile, readFileSync } from 'fs'
+import { promises, existsSync } from 'fs'
 import { Competition, Match, MatchTeam } from '../entities/match'
 import { MatchSatuses, MatchSatusFilterTypes } from '../utils/enums'
 
 // TODO: Test data
-const saveTestData = (data: unknown, fileName: string) => {
+const saveTestData = async (data: unknown, fileName: string) => {
+  console.log(fileName)
   const json = JSON.stringify(data)
-  writeFile(fileName, json, () => {
-    // empty function for ts
-  })
+
+  if (!existsSync('testData')) {
+    await promises.mkdir('testData')
+  }
+
+  await promises.writeFile(`./testData/${fileName}`, json)
 }
 
-const getTestData = (fileName: string) => {
+const getTestData = async (fileName: string) => {
   try {
-    const data = readFileSync(fileName)
+    const data = await promises.readFile(`./testData/${fileName}`)
 
     return JSON.parse(data.toString())
   } catch {
@@ -31,10 +35,10 @@ const callFootballApi = async ({ apiString, params }: { apiString: string, param
 }
 
 const getAllMatchesFromApi = async (teams: MatchTeam[], filterType: MatchSatusFilterTypes) => {
-  const testData = getTestData('testMatchesData.json')
+  const testData = await getTestData('testMatchesData.json')
 
   if (testData) {
-    return mapCurrentMatches(
+    return mapMatches(
       testData.matches,
       testData.competition,
       teams,
@@ -48,9 +52,9 @@ const getAllMatchesFromApi = async (teams: MatchTeam[], filterType: MatchSatusFi
     }
   })
 
-  saveTestData(response.data, 'testMatchesData.json')
+  await saveTestData(response.data, 'testMatchesData.json')
 
-  return mapCurrentMatches(
+  return mapMatches(
     response.data.matches,
     response.data.competition,
     teams,
@@ -58,7 +62,7 @@ const getAllMatchesFromApi = async (teams: MatchTeam[], filterType: MatchSatusFi
 }
 
 const getAllTeamsFromApi = async () => {
-  const testData = getTestData('testTeamsData.json')
+  const testData = await getTestData('testTeamsData.json')
 
   if (testData) {
     return mapTeams(testData.teams)
@@ -71,7 +75,7 @@ const getAllTeamsFromApi = async () => {
     }
   })
 
-  saveTestData(response.data, 'testTeamsData.json')
+  await saveTestData(response.data, 'testTeamsData.json')
 
   return mapTeams(response.data.teams)
 }
@@ -80,7 +84,7 @@ const mapTeams = (teams: MatchTeam[]) => {
   return teams.map(team => new MatchTeam(team))
 }
 
-const mapCurrentMatches = (currMatches: Match[], competition: Competition, teams: MatchTeam[], filterType: MatchSatusFilterTypes) => {
+const mapMatches = (currMatches: Match[], competition: Competition, teams: MatchTeam[], filterType: MatchSatusFilterTypes) => {
   const matches = currMatches.map(match => {
     const homeTeam = teams.find(team => team.id === match.homeTeam.id)
     const awayTeam = teams.find(team => team.id === match.awayTeam.id)
