@@ -13,12 +13,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.app,
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  height: 100%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: $color-text;
+  background-color: $color-bg-layout;
 }
 </style>

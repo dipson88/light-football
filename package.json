@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "start": "node Web/dist/index.js",
+    "install": "cd ClientApp && npm i --production=false && cd ../Web && npm i --production=false",
+    "build": "cd ClientApp && npm run build && npm prune --production && cd ../Web && npm run build && npm prune --production"
+  }
+}

@@ -1,6 +1,10 @@
 export default {
   names: {
+    Error404: 'Error404',
+    Error500: 'Error500',
     HelloWorld: 'HelloWorld',
-    Error404: 'Error404'
+    Home: 'Home',
+    Login: 'Login',
+    CreateUser: 'CreateUser'
   }
 }
