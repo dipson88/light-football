@@ -1,0 +1,97 @@
+<template>
+  <section class="matches-page">
+    <div class="matches-page__competition">
+      <h2>{{ competitionHeader }}</h2>
+      <MatchesControls
+        :selected-type="selectedType"
+        @select-type="onSelectType"
+      />
+    </div>
+    <MatchGroupList
+      :groups="groups"
+      class="matches-page__matches"
+    />
+  </section>
+</template>
+
+<script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+import MatchGroupList from '@/components/matches/MatchGroupList.vue'
+import MatchesControls from './MatchesControls.vue'
+
+import { useMatchesStore } from '@/store/useMatchesStore'
+import { storeToRefs } from 'pinia'
+import { MatchType } from '@/utils/types'
+import i18n from '@/locale'
+import { MatchSatusFilterTypes } from '@/utils/enums'
+
+const { t } = i18n.global
+const mapGroups = (match: MatchType[]) => {
+  return match.reduce((acc, curr) => {
+    const group = acc.find(item => item.key === curr.matchday)
+
+    if (group) {
+      group.matches.push(curr)
+    } else {
+      acc.push({
+        key: curr.matchday,
+        header: t('round', { number: curr.matchday }),
+        matches: [curr]
+      })
+    }
+
+    return acc
+  }, [] as { key: string, header: string, matches: MatchType[] }[])
+}
+
+export default defineComponent({
+  name: 'MatchesPage',
+  components: {
+    MatchGroupList,
+    MatchesControls
+  },
+  async setup () {
+    const matchesStore = useMatchesStore()
+    const { matches, competition } = storeToRefs(matchesStore)
+    const selectedType = ref(MatchSatusFilterTypes.CURRENT)
+    await matchesStore.getMatches(selectedType.value)
+
+    const groups = computed(() => {
+      return mapGroups(matches.value)
+    })
+
+    const onSelectType = async (type: MatchSatusFilterTypes) => {
+      selectedType.value = type
+      await matchesStore.getMatches(selectedType.value)
+    }
+
+    return {
+      competitionHeader: competition.value?.name,
+      groups,
+      selectedType,
+      onSelectType
+    }
+  }
+})
+</script>
+
+<style lang="scss">
+.matches-page {
+  &__competition,
+  &__matches {
+    max-width: 700px;
+  }
+
+  &__competition {
+    margin: 30px auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__matches {
+    margin: 0 auto;
+  }
+}
+</style>

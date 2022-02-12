@@ -35,11 +35,6 @@ const getPredictions = async (req: IRequest<Prediction>, res: IResponse) => {
   return res.status(200).send(data)
 }
 
-export {
-  createPrediction,
-  getPredictions
-}
-
 export default {
   createPrediction,
   getPredictions

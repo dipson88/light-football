@@ -1,6 +1,6 @@
 <template>
-  <div class="error-layout">
-    Error 404
+  <div class="error-server">
+    Error 500
   </div>
 </template>
 
@@ -8,6 +8,6 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'ErrorNotFound'
+  name: 'ErrorServer'
 })
 </script>

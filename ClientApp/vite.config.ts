@@ -6,6 +6,15 @@ import * as path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000/',
+        changeOrigin: true
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')
@@ -30,11 +39,11 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         charset: false,
-        additionalData: '@import "/src/styles/helpers/index.scss";'
+        additionalData: '@import "/src/styles/index.scss";'
       }
     }
   },
   build: {
-    outDir: 'dist'
+    outDir: '../Web/dist/public'
   }
 })
