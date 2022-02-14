@@ -62,6 +62,11 @@ const api = {
         return axios.get('matches/all', { params: { filterType } })
       }
     }
+  },
+  posts: {
+    get: {
+      // TODO
+    }
   }
 }
 
