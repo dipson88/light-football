@@ -52,8 +52,35 @@ const getAllPosts = async (req: IRequest, res: IResponse) => {
   return res.status(200).send(data)
 }
 
+const getPostsByMatchId = async (req: IRequest, res: IResponse) => {
+  const matchId = req.query.matchId
+    ? req.query.matchId.toString()
+    : null
+
+  if (!matchId) {
+    return res.status(200).send([])
+  }
+
+  const { error, data } = await postService.getPosts({ matchId })
+
+  if (error) {
+    res.status(400).send([])
+  }
+
+  return res.status(200).send(data.map(post => ({
+    id: post.id,
+    userId: post.userId,
+    matchId: Number(post.matchId),
+    title: post.title,
+    content: post.content,
+    createdAt: post.cratedAt,
+    updatedAt: post.updatedAt
+  })))
+}
+
 export default {
   createPost,
   getUserPosts,
-  getAllPosts
+  getAllPosts,
+  getPostsByMatchId
 }

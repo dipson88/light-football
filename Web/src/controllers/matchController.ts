@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import matchService from '../services/matchService'
 import { MatchSatusFilterTypes } from '../utils/enums'
+import { IRequest, IResponse } from '../interfaces'
 
 const getAllMatches = async (req: Request, res: Response) => {
   const filterType = req.query.filterType
@@ -20,6 +21,25 @@ const getAllMatches = async (req: Request, res: Response) => {
   return res.status(200).send(data)
 }
 
+const getMatchInfo = async (req: IRequest, res: IResponse) => {
+  const matchId = req.query.matchId
+    ? Number(req.query.matchId)
+    : null
+
+  if (!matchId) {
+    return res.status(200).send(null)
+  }
+
+  const { error, data } = await matchService.getMutchById(matchId)
+
+  if (error) {
+    return res.status(400).send(error)
+  }
+
+  return res.status(200).send(data || null)
+}
+
 export default {
-  getAllMatches
+  getAllMatches,
+  getMatchInfo
 }

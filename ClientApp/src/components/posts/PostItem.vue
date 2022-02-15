@@ -1,13 +1,13 @@
 <template>
   <section class="post-item">
-    <p>
-      TITLE
-    </p>
+    <h3>
+      {{ title }}
+    </h3>
     <div>
-      CONTENT
+      {{ content }}
     </div>
     <p>
-      ADDITIONAL INFO
+      {{ createdAt }} - {{ updatedAt }}
     </p>
   </section>
 </template>
@@ -16,6 +16,24 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'PostItem'
+  name: 'PostItem',
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    content: {
+      type: String,
+      default: ''
+    },
+    createdAt: {
+      type: Date,
+      default: null
+    },
+    updatedAt: {
+      type: Date,
+      default: null
+    }
+  }
 })
 </script>

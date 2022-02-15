@@ -38,3 +38,13 @@ export type CompetitionType = {
   name: string
   code: string
 }
+
+export type PostType = {
+  id: string
+  userId: string
+  matchId: number,
+  content: string,
+  title: string,
+  updatedAt: Date,
+  createdAt: Date
+}

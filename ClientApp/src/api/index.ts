@@ -60,12 +60,17 @@ const api = {
     get: {
       allMatches (filterType: MatchSatusFilterTypes) {
         return axios.get('matches/all', { params: { filterType } })
+      },
+      matchInfo (matchId: number) {
+        return axios.get('matches/match-info', { params: { matchId } })
       }
     }
   },
   posts: {
     get: {
-      // TODO
+      postByMatchId (matchId: number) {
+        return axios.get('posts/post-by-match', { params: { matchId } })
+      }
     }
   }
 }
