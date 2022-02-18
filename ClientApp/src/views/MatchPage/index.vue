@@ -1,6 +1,7 @@
 <template>
   <section class="match-page">
     <MatchPageInfo
+      v-if="matchInfo"
       :match-info="matchInfo"
       class="match-page__info"
     />

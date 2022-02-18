@@ -32,7 +32,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
 import MatchItem from './MatchItem.vue'
-import MatchListHeader from './MatchListHeader'
+import MatchListHeader from './MatchListHeader.vue'
 import { MatchType } from '@/utils/types'
 import { useI18n } from 'vue-i18n'
 import { dateFormatters } from '@/utils'

@@ -20,8 +20,8 @@
 import { defineComponent, PropType, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { dateFormatters } from '@/utils'
-import MatchListHeader from '@/components/matches/MatchListHeader'
-import MatchItem from '@/components/matches/MatchItem'
+import MatchListHeader from '@/components/matches/MatchListHeader.vue'
+import MatchItem from '@/components/matches/MatchItem.vue'
 import { MatchType } from '@/utils/types'
 
 export default defineComponent({

@@ -37,7 +37,7 @@ export default defineComponent({
     const { t } = useI18n()
     const formattedUpdateDate = computed(() => {
       return props.updatedAt
-        ? dateFormatters.toLocaleDate(props.updatedAt)
+        ? dateFormatters.toLocaleDate(props.updatedAt.toString())
         : ''
     })
 
