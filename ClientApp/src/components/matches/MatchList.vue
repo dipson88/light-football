@@ -94,7 +94,7 @@ export default defineComponent({
 <style lang="scss">
 .match-list {
   &__item {
-    font-size: 12px;
+    font-size: $font-size-x-small;
     background-color: darken($color-brand-white, 5%);
     cursor: pointer;
 
@@ -106,14 +106,14 @@ export default defineComponent({
   &__header {
     background-color: darken($color-brand-gray, 15%);
     color: $color-brand-white;
-    font-size: 12px;
+    font-size: $font-size-x-small;
     padding: 5px 20px;
     min-height: 25px;
     box-sizing: border-box;
   }
 
   &__no-data {
-    font-size: 12px;
+    font-size: $font-size-x-small;
     text-align: center;
     margin-top: 5px;
   }

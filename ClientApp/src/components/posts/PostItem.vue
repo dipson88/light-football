@@ -58,8 +58,9 @@ export default defineComponent({
   }
 
   &__additionals {
+    font-size: $font-size-x-small;
     text-align: right;
-    margin: 5px 0 0;
+    margin: 15px 0 0;
     border-bottom: 1px solid $color-brand-gray-dark;
   }
 }

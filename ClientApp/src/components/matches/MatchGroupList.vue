@@ -56,7 +56,7 @@ export default defineComponent({
 <style lang="scss">
 .match-group-list {
   &__no-data {
-    font-size: 12px;
+    font-size: $font-size-x-small;
     text-align: center;
     margin-top: 5px;
   }

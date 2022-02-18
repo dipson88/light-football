@@ -22,7 +22,7 @@ export default defineComponent({
 .match-list-header {
   background-color: darken($color-brand-gray, 15%);
   color: $color-brand-white;
-  font-size: 12px;
+  font-size: $font-size-x-small;
   padding: 5px 20px;
   margin: 0;
   min-height: 25px;

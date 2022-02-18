@@ -209,7 +209,7 @@ export default defineComponent({
 
   &__error {
     color: $color-brand-danger;
-    font-size: 12px;
+    font-size: $font-size-x-small;
     margin: 0;
   }
 

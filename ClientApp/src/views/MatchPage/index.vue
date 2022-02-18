@@ -9,9 +9,16 @@
         {{ t('predicitions') }}
       </h3>
       <PostList
+        v-if="posts.length"
         :posts="posts"
         class="match-page__posts-list"
       />
+      <p
+        v-else
+        class="match-page__no-data"
+      >
+        {{ t('no_data_to_display') }}
+      </p>
     </section>
   </section>
 </template>
@@ -80,6 +87,12 @@ export default defineComponent({
 
   &__posts-header {
     margin-bottom: 15px;
+  }
+
+  &__no-data {
+    font-size: $font-size-x-small;
+    text-align: center;
+    margin-top: 5px;
   }
 }
 </style>
