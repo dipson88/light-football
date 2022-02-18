@@ -1,9 +1,7 @@
 <template>
   <div class="match-list">
     <slot name="header">
-      <div class="match-list__header">
-        {{ headerText }}
-      </div>
+      <MatchListHeader :header-text="headerText" />
     </slot>
     <template v-if="isMatchesExist">
       <MatchItem
@@ -34,6 +32,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
 import MatchItem from './MatchItem.vue'
+import MatchListHeader from './MatchListHeader'
 import { MatchType } from '@/utils/types'
 import { useI18n } from 'vue-i18n'
 import { dateFormatters } from '@/utils'
@@ -41,7 +40,8 @@ import { dateFormatters } from '@/utils'
 export default defineComponent({
   name: 'MatchList',
   components: {
-    MatchItem
+    MatchItem,
+    MatchListHeader
   },
   props: {
     matches: {

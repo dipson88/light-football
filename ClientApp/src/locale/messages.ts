@@ -1,5 +1,7 @@
 export default {
   en: {
+    updated: 'Updated {date}',
+    predicitions: 'Predicitions',
     current: 'Current',
     upcoming: 'Upcoming',
     finished: 'Finished',
@@ -21,6 +23,8 @@ export default {
     we_didnt_recognize_the_email : 'We didn\'t recognize the email or password you entered.'
   },
   ru: {
+    updated: 'updated',
+    predicitions: 'predicitions',
     current: 'current',
     upcoming: 'upcoming',
     finished: 'finished',

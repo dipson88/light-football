@@ -5,8 +5,8 @@
       :key="post.id"
       :title="post.title"
       :content="post.content"
-      :created-at="post.createdAt"
       :updated-at="post.updatedAt"
+      class="post-list__item"
     />
   </section>
 </template>
@@ -29,3 +29,11 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+.post-list {
+  &__item + &__item {
+    margin-top: 25px;
+  }
+}
+</style>

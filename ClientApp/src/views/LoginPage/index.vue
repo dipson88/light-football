@@ -60,7 +60,7 @@ export default defineComponent({
 <style lang="scss">
 .login-page {
   &__form {
-    margin: 150px auto 0;
+    margin: 10% auto 0;
     max-width: 400px;
   }
 }
