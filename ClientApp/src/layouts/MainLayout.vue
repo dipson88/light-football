@@ -46,7 +46,7 @@ export default defineComponent({
 
 <style lang="scss">
 .main-layout {
-  height: 100%;
+  min-height: 100vh;
   box-sizing: border-box;
   padding: $height-header 0 $height-footer 0;
 

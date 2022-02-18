@@ -13,9 +13,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.app,
-#app {
-  height: 100%;
+.app {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
