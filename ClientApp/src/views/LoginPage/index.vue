@@ -29,7 +29,7 @@ export default defineComponent({
     const errorMessage = ref('')
 
     onMounted(async () => {
-      if (loginStore.token) {
+      if (loginStore.accessToken) {
         router.push({ name: routerHelper.names.Home })
       }
     })
