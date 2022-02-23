@@ -35,9 +35,7 @@ export default defineConfig({
     vuePlugin(),
     eslintPlugin(),
     viteStylelintPlugin(),
-    vueI18n({
-      fullInstall: false
-    })
+    vueI18n()
   ],
   css: {
     preprocessorOptions: {
