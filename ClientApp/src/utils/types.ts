@@ -1,12 +1,5 @@
 import { MatchSatuses } from './enums'
 
-export type LoginUserInputType = {
-  name: string
-  email: string
-  password: string
-  repeatPassword: string
-}
-
 export type MatchType = {
   id: number
   utcDate: Date

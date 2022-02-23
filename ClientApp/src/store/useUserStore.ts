@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { api } from '@/api'
+import { ILoginUserInput } from '@/interfaces'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -15,6 +16,15 @@ export const useUserStore = defineStore('user', {
       } catch {
         this.userInfo = null
         this.isUserLoaded = false
+      }
+    },
+    async createUser (model: ILoginUserInput) {
+      try {
+        await api.users.post.createUser(model)
+
+        return true
+      } catch {
+        return false
       }
     }
   }

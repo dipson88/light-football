@@ -2,45 +2,72 @@ import axios from 'axios'
 import router from '@/router'
 import { useLoginStore } from '@/store/useLoginStore'
 import { enums, routerHelper } from '@/utils'
-import { LoginUserInputType } from '@/utils/types'
+import { ILoginUserInput } from '@/interfaces'
 import { MatchSatusFilterTypes } from '@/utils/enums'
 
+const refreshTokenUrl = 'auth/refresh'
+
 axios.defaults.baseURL = '/api/'
-axios.interceptors.request.use(request => {
+axios.interceptors.request.use((request) => {
   const loginStore = useLoginStore()
 
-  if (request.headers && loginStore.token) {
-    request.headers.Authorization = `Bearer ${loginStore.token}`
+  const isRefresh = request.url === refreshTokenUrl
+  const isAnyTokenExist = loginStore.accessToken || loginStore.refreshToken
+
+  if (request.headers && isAnyTokenExist) {
+    request.headers.Authorization = `Bearer ${
+      isRefresh ? loginStore.refreshToken : loginStore.accessToken
+    }`
   }
 
   return request
 })
-axios.interceptors.response.use(response => response, error => {
-  switch (error.response.status) {
-    case enums.HttpStatuses.Status401: {
-      const loginStore = useLoginStore()
-      loginStore.token = ''
-      router.push({ name: routerHelper.names.Login })
-      break
-    }
-    case enums.HttpStatuses.Status404: {
-      router.push({ name: routerHelper.names.Error404 })
-      break
-    }
-    case enums.HttpStatuses.Status500: {
-      router.push({ name: routerHelper.names.Error500 })
-      break
-    }
-  }
+axios.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const loginStore = useLoginStore()
 
-  return Promise.reject(error)
-})
+    switch (error.response.status) {
+      case enums.HttpStatuses.Status401: {
+        loginStore.removeTokens()
+        router.push({ name: routerHelper.names.Login })
+        break
+      }
+      case enums.HttpStatuses.Status403: {
+        await loginStore.refreshCredentials()
+
+        if (loginStore.accessToken && loginStore.refreshToken) {
+          error.config.headers.Authorization = `Bearer ${loginStore.accessToken}`
+
+          return await axios.request(error.config)
+        } else {
+          router.push({ name: routerHelper.names.Login })
+        }
+
+        break
+      }
+      case enums.HttpStatuses.Status404: {
+        router.push({ name: routerHelper.names.Error404 })
+        break
+      }
+      case enums.HttpStatuses.Status500: {
+        router.push({ name: routerHelper.names.Error500 })
+        break
+      }
+    }
+
+    return Promise.reject(error)
+  }
+)
 
 const api = {
   authenticate: {
     post: {
-      login ({ email, password }: Partial<LoginUserInputType>) {
+      login ({ email, password }: Partial<ILoginUserInput>) {
         return axios.post('auth/login', { email, password })
+      },
+      refreshToken () {
+        return axios.post(refreshTokenUrl)
       }
     }
   },
@@ -51,7 +78,7 @@ const api = {
       }
     },
     post: {
-      createUser (model: LoginUserInputType) {
+      createUser (model: ILoginUserInput) {
         return axios.post('users/create', model)
       }
     }
@@ -79,6 +106,4 @@ export default {
   api
 }
 
-export {
-  api
-}
+export { api }
