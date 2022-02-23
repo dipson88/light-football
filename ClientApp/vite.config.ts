@@ -36,7 +36,8 @@ export default defineConfig({
     eslintPlugin(),
     viteStylelintPlugin(),
     vueI18n({
-      runtimeOnly: false
+      runtimeOnly: false,
+      fullInstall: false
     })
   ],
   css: {
