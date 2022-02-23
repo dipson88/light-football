@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
 import eslintPlugin from 'vite-plugin-eslint'
 import viteStylelintPlugin from '@amatlash/vite-plugin-stylelint'
+import vueI18n from '@intlify/vite-plugin-vue-i18n'
 import * as path from 'path'
 
 // https://vitejs.dev/config/
@@ -33,7 +34,10 @@ export default defineConfig({
   plugins: [
     vuePlugin(),
     eslintPlugin(),
-    viteStylelintPlugin()
+    viteStylelintPlugin(),
+    vueI18n({
+      fullInstall: false
+    })
   ],
   css: {
     preprocessorOptions: {
@@ -44,6 +48,7 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: '../Web/dist/public'
+    outDir: '../Web/dist/public',
+    emptyOutDir: true
   }
 })
