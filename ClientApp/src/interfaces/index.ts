@@ -4,3 +4,9 @@ export interface ILoginUserInput {
   password: string
   repeatPassword: string
 }
+
+export interface IPostInput {
+  matchId: number,
+  content: string,
+  title: string
+}

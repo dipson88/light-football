@@ -1,5 +1,6 @@
 export default {
   en: {
+    create_prediction: 'Create Prediction',
     updated: 'Updated {date}',
     predicitions: 'Predicitions',
     current: 'Current',
@@ -23,6 +24,7 @@ export default {
     we_didnt_recognize_the_email : 'We didn\'t recognize the email or password you entered.'
   },
   ru: {
+    create_prediction: 'create_prediction',
     updated: 'updated',
     predicitions: 'predicitions',
     current: 'current',

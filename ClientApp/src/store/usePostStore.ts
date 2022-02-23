@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { api } from '@/api'
 import { PostType } from '@/utils/types'
+import { IPostInput } from '@/interfaces'
 
 export const usePostStore = defineStore('posts', {
   state: (): {
@@ -24,6 +25,15 @@ export const usePostStore = defineStore('posts', {
         this._posts = response.data || []
       } catch {
         this._posts = []
+      }
+    },
+    async createPost (postInput: IPostInput) {
+      try {
+        await api.posts.post.createPost(postInput)
+
+        return true
+      } catch {
+        return false
       }
     }
   }

@@ -16,7 +16,7 @@ export class Post extends BaseEntity {
 
   @IsNotEmpty()
   @Column({ nullable: false })
-    matchId: string
+    matchId: number
 
   constructor (post?: IPostInput) {
     super()
@@ -34,5 +34,5 @@ interface IPostInput {
   title: string,
   content: string
   userId: string
-  matchId: string
+  matchId: number
 }

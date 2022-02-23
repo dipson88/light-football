@@ -57,6 +57,10 @@ export default defineComponent({
     margin-bottom: 10px;
   }
 
+  &__content {
+    white-space: pre-wrap;
+  }
+
   &__additionals {
     font-size: $font-size-x-small;
     text-align: right;

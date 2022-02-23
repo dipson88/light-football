@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from '@/router'
 import { useLoginStore } from '@/store/useLoginStore'
 import { enums, routerHelper } from '@/utils'
-import { ILoginUserInput } from '@/interfaces'
+import { ILoginUserInput, IPostInput } from '@/interfaces'
 import { MatchSatusFilterTypes } from '@/utils/enums'
 
 const refreshTokenUrl = 'auth/refresh'
@@ -97,6 +97,11 @@ const api = {
     get: {
       postByMatchId (matchId: number) {
         return axios.get('posts/post-by-match', { params: { matchId } })
+      }
+    },
+    post: {
+      createPost (model: IPostInput) {
+        return axios.post('/posts/create', model)
       }
     }
   }

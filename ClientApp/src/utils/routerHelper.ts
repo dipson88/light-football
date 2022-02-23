@@ -5,6 +5,7 @@ export default {
     Error500: 'Error500',
     Home: 'Home',
     Login: 'Login',
-    Match: 'Match'
+    Match: 'Match',
+    PostCreate: 'PostCreate'
   }
 }

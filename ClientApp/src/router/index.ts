@@ -12,6 +12,7 @@ import LoginPage from '@/views/LoginPage/index.vue'
 import CreateUser from '@/views/CreateUser/index.vue'
 import MatchesPage from '@/views/MatchesPage/index.vue'
 import MatchPage from '@/views/MatchPage/index.vue'
+import PostCreate from '@/views/PostCreate/index.vue'
 
 const routerNames = routerHelper.names
 
@@ -31,6 +32,12 @@ const router = createRouter({
           path: 'match/:id',
           name: routerNames.Match,
           component: MatchPage,
+          props: true
+        },
+        {
+          path: 'post-create/:matchId',
+          name: routerNames.PostCreate,
+          component: PostCreate,
           props: true
         }
       ]

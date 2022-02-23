@@ -54,7 +54,7 @@ const getAllPosts = async (req: IRequest, res: IResponse) => {
 
 const getPostsByMatchId = async (req: IRequest, res: IResponse) => {
   const matchId = req.query.matchId
-    ? req.query.matchId.toString()
+    ? Number(req.query.matchId)
     : null
 
   if (!matchId) {

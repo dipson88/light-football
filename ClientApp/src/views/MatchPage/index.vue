@@ -7,7 +7,17 @@
     />
     <section class="match-page__posts">
       <h3 class="match-page__posts-header">
-        {{ t('predicitions') }}
+        <span>
+          {{ t('predicitions') }}
+        </span>
+        <NButton
+          text
+          type="info"
+          class="match-page__create-button"
+          @click="onCreateOwnPerdiciton"
+        >
+          {{ t('create_prediction') }}
+        </NButton>
       </h3>
       <PostList
         v-if="posts.length"
@@ -28,17 +38,21 @@
 import { defineComponent } from 'vue'
 import MatchPageInfo from './MatchPageInfo.vue'
 import PostList from '@/components/posts/PostList.vue'
+import { NButton } from 'naive-ui'
 
 import { useMatchesStore } from '@/store/useMatchesStore'
 import { usePostStore } from '@/store/usePostStore'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import { routerHelper } from '@/utils'
 
 export default defineComponent({
   name: 'MatchPage',
   components: {
     MatchPageInfo,
-    PostList
+    PostList,
+    NButton
   },
   props: {
     id: {
@@ -48,6 +62,7 @@ export default defineComponent({
   },
   async setup (props) {
     const { t } = useI18n()
+    const router = useRouter()
     const matchStore = useMatchesStore()
     const postStore = usePostStore()
     const { matchInfo } = storeToRefs(matchStore)
@@ -58,10 +73,18 @@ export default defineComponent({
       postStore.getPostsByMatchId(+props.id)
     ])
 
+    const onCreateOwnPerdiciton = () => {
+      router.push({
+        name: routerHelper.names.PostCreate,
+        params: { matchId: props.id }
+      })
+    }
+
     return {
       t,
       matchInfo,
-      posts
+      posts,
+      onCreateOwnPerdiciton
     }
   }
 })
@@ -87,7 +110,13 @@ export default defineComponent({
   }
 
   &__posts-header {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 15px;
+  }
+
+  &__create-button {
+    font-size: $font-size-small;
   }
 
   &__no-data {
