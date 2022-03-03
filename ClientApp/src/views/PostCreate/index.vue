@@ -1,6 +1,9 @@
 <template>
   <section class="post-page">
-    <PostCreateForm @submit="onSubmit" />
+    <PostCreateForm
+      class="post-page__form"
+      @submit="onSubmit"
+    />
   </section>
 </template>
 
@@ -10,6 +13,7 @@ import PostCreateForm from '@/components/posts/PostCreateForm.vue'
 import { usePostStore } from '@/store/usePostStore'
 import { useRouter } from 'vue-router'
 import { routerHelper } from '@/utils'
+import { MatchResultTypes, MatchTotalTypes, MatchTotalValueTypes } from '@/utils/enums'
 
 export default defineComponent({
   name: 'PostCreate',
@@ -26,17 +30,18 @@ export default defineComponent({
     const postStore = usePostStore()
     const router = useRouter()
 
-    const onSubmit = async ({
-      title,
-      content
-    }: {
-      title: string;
-      content: string;
+    const onSubmit = async (post: {
+      content: string
+      result: MatchResultTypes
+      total: MatchTotalValueTypes
+      totalType: MatchTotalTypes
     }) => {
       const isSuccess = await postStore.createPost({
-        title,
-        content,
-        matchId: Number(props.matchId)
+        content: post.content,
+        matchId: Number(props.matchId),
+        result: post.result,
+        total: post.total,
+        totalType: post.totalType
       })
 
       if (isSuccess) {
@@ -54,6 +59,9 @@ export default defineComponent({
 
 <style lang="scss">
 .post-page {
-  display: block;
+  &__form {
+    max-width: $main-max-width;
+    margin: $main-margin-top auto 0;
+  }
 }
 </style>

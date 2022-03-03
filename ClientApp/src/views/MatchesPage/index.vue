@@ -90,11 +90,11 @@ export default defineComponent({
 .matches-page {
   &__competition,
   &__matches {
-    max-width: 700px;
+    max-width: $main-max-width;
   }
 
   &__competition {
-    margin: 5% auto 10px;
+    margin: $main-margin-top auto 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;

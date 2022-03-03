@@ -71,8 +71,10 @@ const getPostsByMatchId = async (req: IRequest, res: IResponse) => {
     id: post.id,
     userId: post.userId,
     matchId: Number(post.matchId),
-    title: post.title,
     content: post.content,
+    result: post.result,
+    total: post.total,
+    totalType: post.totalType,
     createdAt: post.cratedAt,
     updatedAt: post.updatedAt
   })))

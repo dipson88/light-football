@@ -27,6 +27,7 @@ export default defineComponent({
 
 <style lang="scss">
 .app-header {
+  z-index: $z-index-navbar;
   background-color: $color-header;
   height: $height-header;
   line-height: $height-header;

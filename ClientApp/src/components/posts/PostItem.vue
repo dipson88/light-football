@@ -1,7 +1,7 @@
 <template>
   <section class="post-item">
     <h3 class="post-item__title">
-      {{ title }}
+      {{ formattedTitle }}
     </h3>
     <div class="post-item__content">
       {{ content }}
@@ -13,20 +13,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { dateFormatters } from '@/utils'
+import { defineComponent, computed, PropType } from 'vue'
+import { dateFormatters, postHelper } from '@/utils'
 import { useI18n } from 'vue-i18n'
+import {
+  MatchResultTypes,
+  MatchTotalTypes,
+  MatchTotalValueTypes
+} from '@/utils/enums'
 
 export default defineComponent({
   name: 'PostItem',
   props: {
-    title: {
-      type: String,
-      default: ''
-    },
     content: {
       type: String,
       default: ''
+    },
+    result: {
+      type: Number as PropType<MatchResultTypes>,
+      default: MatchResultTypes.WinP1
+    },
+    total: {
+      type: Number as PropType<MatchTotalValueTypes>,
+      default: MatchTotalValueTypes.HalfAndZero
+    },
+    totalType: {
+      type: Number as PropType<MatchTotalTypes>,
+      default: MatchTotalTypes.Less
     },
     updatedAt: {
       type: Date,
@@ -41,9 +54,22 @@ export default defineComponent({
         : ''
     })
 
+    const formattedTitle = computed(() => {
+      const result = postHelper.resultTNames.get(props.result) ?? ''
+      const totalType = postHelper.totalTypeTNames.get(props.totalType) ?? ''
+      const total = postHelper.totalNames.get(props.total) ?? ''
+
+      return t('result_total_type_more', {
+        result: t(result),
+        totalType: t(totalType),
+        total
+      })
+    })
+
     return {
       t,
-      formattedUpdateDate
+      formattedUpdateDate,
+      formattedTitle
     }
   }
 })

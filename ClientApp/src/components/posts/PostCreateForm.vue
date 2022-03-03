@@ -4,23 +4,15 @@
     @submit.prevent
   >
     <NInput
-      v-model:value="title"
-      type="text"
-      placeholder="Title"
-      maxlength="30"
-      show-count
-      clearable
-      class="post-create-form__input"
-    />
-    <NInput
       v-model:value="content"
       type="textarea"
       placeholder="Content"
-      maxlength="250"
+      maxlength="1024"
       show-count
       clearable
       class="post-create-form__textarea"
     />
+    <PostPrediction @prediction-change="onPredictionChange" />
     <div class="post-create-form__buttons">
       <NButton
         type="primary"
@@ -37,29 +29,51 @@
 import { defineComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { NButton, NInput } from 'naive-ui'
+import PostPrediction from './PostPrediction.vue'
+import { MatchResultTypes, MatchTotalTypes, MatchTotalValueTypes } from '@/utils/enums'
 
 export default defineComponent({
   name: 'PostCreateForm',
   components: {
     NButton,
-    NInput
+    NInput,
+    PostPrediction
   },
   emits: {
-    submit: (model: { content: string, title: string }) => model
+    submit: (model: {
+      content: string,
+      total: MatchTotalValueTypes,
+      totalType: MatchTotalTypes,
+      result: MatchResultTypes
+    }) => model
   },
   setup (props, vm) {
     const { t } = useI18n()
     const content = ref('')
-    const title = ref('')
+    const result = ref(MatchResultTypes.WinP1)
+    const total = ref(MatchTotalValueTypes.HalfAndZero)
+    const totalType = ref(MatchTotalTypes.Less)
+
+    const onPredictionChange = (model: {
+      total: MatchTotalValueTypes,
+      totalType: MatchTotalTypes,
+      result: MatchResultTypes
+    }) => {
+      total.value = model.total
+      totalType.value = model.totalType
+      result.value = model.result
+    }
 
     const onSubmit = () => {
       vm.emit('submit', {
         content: content.value,
-        title: title.value
+        total: total.value,
+        totalType: totalType.value,
+        result: result.value
       })
     }
 
-    return { t, content, title, onSubmit }
+    return { t, content, onPredictionChange, onSubmit }
   }
 })
 </script>
@@ -67,6 +81,11 @@ export default defineComponent({
 <style lang="scss">
 .post-create-form {
   $spaces: 10px;
+
+  padding: 20px;
+  background-color: $color-brand-white;
+  border: 1px solid $color-border;
+  box-shadow: $box-shadow-from;
 
   &__textarea {
     margin-top: $spaces;

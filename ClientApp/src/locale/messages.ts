@@ -1,5 +1,14 @@
 export default {
   en: {
+    result_total_type_more: '{result} (total {totalType} than {total})',
+    result: 'Result',
+    w1: 'W1',
+    w2: 'W2',
+    x: 'X',
+    total_type: 'Total type',
+    less: 'Less',
+    more: 'More',
+    total: 'Total',
     create_prediction: 'Create Prediction',
     updated: 'Updated {date}',
     predicitions: 'Predicitions',
@@ -24,6 +33,15 @@ export default {
     we_didnt_recognize_the_email : 'We didn\'t recognize the email or password you entered.'
   },
   ru: {
+    result_total_type_more: 'result_total_type_more',
+    result: 'result',
+    w1: 'w1',
+    w2: 'w2',
+    x: 'x',
+    total_type: 'total_type',
+    less: 'less',
+    more: 'more',
+    total: 'total',
     create_prediction: 'create_prediction',
     updated: 'updated',
     predicitions: 'predicitions',

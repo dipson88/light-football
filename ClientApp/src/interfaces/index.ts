@@ -1,3 +1,9 @@
+import {
+  MatchTotalTypes,
+  MatchTotalValueTypes,
+  MatchResultTypes
+} from '@/utils/enums'
+
 export interface ILoginUserInput {
   name: string
   email: string
@@ -8,5 +14,7 @@ export interface ILoginUserInput {
 export interface IPostInput {
   matchId: number,
   content: string,
-  title: string
+  result: MatchResultTypes,
+  total: MatchTotalValueTypes,
+  totalType: MatchTotalTypes
 }

@@ -94,13 +94,13 @@ export default defineComponent({
 .match-page {
   &__info,
   &__posts {
-    max-width: 700px;
+    max-width: $main-max-width;
     background-color: darken($color-brand-white, 5%);
     box-sizing: border-box;
   }
 
   &__info {
-    margin: 5% auto 0;
+    margin: $main-margin-top auto 0;
     min-height: 150px;
   }
 

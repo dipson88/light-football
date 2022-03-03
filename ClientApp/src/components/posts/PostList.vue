@@ -3,8 +3,10 @@
     <PostItem
       v-for="post in posts"
       :key="post.id"
-      :title="post.title"
       :content="post.content"
+      :result="post.result"
+      :total-type="post.totalType"
+      :total="post.total"
       :updated-at="post.updatedAt"
       class="post-list__item"
     />
