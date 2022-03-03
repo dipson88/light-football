@@ -17,5 +17,11 @@ export default defineComponent({
   color: $color-brand-white;
   height: $height-footer;
   line-height: $height-footer;
+  padding: 0 20px;
+  box-sizing: border-box;
+  max-width: 100%;
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
 }
 </style>

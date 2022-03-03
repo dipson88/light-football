@@ -64,6 +64,12 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 20px;
+  box-sizing: border-box;
+  max-width: 100%;
+  position: fixed;
+  width: 100vw;
+  top: 0;
 
   &__title {
     color: $color-brand-white;

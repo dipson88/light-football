@@ -24,22 +24,6 @@ export default defineComponent({
 .login-layout {
   min-height: 100vh;
   box-sizing: border-box;
-  padding: $height-header 0 $height-footer 0;
-
-  &__header,
-  &__footer {
-    position: fixed;
-    width: 100vw;
-    box-sizing: border-box;
-    padding: 0 10px;
-  }
-
-  &__header {
-    top: 0;
-  }
-
-  &__footer {
-    bottom: 0;
-  }
+  padding: $height-header 0 $height-footer-padding 0;
 }
 </style>
