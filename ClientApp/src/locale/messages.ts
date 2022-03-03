@@ -1,5 +1,6 @@
 export default {
   en: {
+    log_out: 'Log Out',
     result_total_type_more: '{result} (total {totalType} than {total})',
     result: 'Result',
     w1: 'W1',
@@ -33,6 +34,7 @@ export default {
     we_didnt_recognize_the_email : 'We didn\'t recognize the email or password you entered.'
   },
   ru: {
+    log_out: 'log_out',
     result_total_type_more: 'result_total_type_more',
     result: 'result',
     w1: 'w1',

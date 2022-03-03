@@ -6,20 +6,50 @@
     >
       The Light
     </router-link>
+    <NButton
+      v-if="isLoggedUser"
+      text
+      color="white"
+      @click="logOut"
+    >
+      {{ t('log_out') }}
+    </NButton>
   </header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { routerHelper } from '@/utils'
+import { NButton } from 'naive-ui'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'AppHeader',
-  setup () {
+  components: {
+    NButton
+  },
+  props: {
+    isLoggedUser: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: {
+    logout: (e: Event) => e
+  },
+  setup (props, vm) {
+    const { t } = useI18n()
+
+    const logOut = (e: Event) => {
+      vm.emit('logout', e)
+    }
+
     return {
       toMainPageRoute: {
         name: routerHelper.names.Home
-      }
+      },
+      t,
+      logOut
     }
   }
 })
@@ -31,6 +61,9 @@ export default defineComponent({
   background-color: $color-header;
   height: $height-header;
   line-height: $height-header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   &__title {
     color: $color-brand-white;

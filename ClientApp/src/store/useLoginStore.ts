@@ -12,6 +12,11 @@ export const useLoginStore = defineStore('login', {
     accessToken: localStorage.getItem(appAccessToken) ?? '',
     refreshToken: localStorage.getItem(appRefreshToken) ?? ''
   }),
+  getters: {
+    isLoggedUser: (state) => {
+      return !!state.accessToken.length && !!state.refreshToken.length
+    }
+  },
   actions: {
     setTokens (data: TokenDataType) {
       this.accessToken = data?.accessToken ?? ''
@@ -48,6 +53,9 @@ export const useLoginStore = defineStore('login', {
 
         return false
       }
+    },
+    logOut () {
+      this.removeTokens()
     }
   }
 })

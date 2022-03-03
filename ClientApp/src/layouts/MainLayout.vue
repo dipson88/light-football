@@ -1,6 +1,10 @@
 <template>
   <main class="main-layout">
-    <AppHeader class="main-layout__header" />
+    <AppHeader
+      :is-logged-user="isLoggedUser"
+      class="main-layout__header"
+      @logout="onLogOut"
+    />
     <Suspense>
       <template #default>
         <router-view v-if="isUserLoaded" />
@@ -18,6 +22,9 @@
 import { defineComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/useUserStore'
+import { useLoginStore } from '@/store/useLoginStore'
+import { useRouter } from 'vue-router'
+import { routerHelper } from '@/utils'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 
@@ -28,6 +35,8 @@ export default defineComponent({
     AppFooter
   },
   setup () {
+    const loginStore = useLoginStore()
+    const router = useRouter()
     const userStore = useUserStore()
     const { isUserLoaded, userInfo } = storeToRefs(userStore)
 
@@ -37,8 +46,15 @@ export default defineComponent({
       }
     })
 
+    const onLogOut = () => {
+      loginStore.logOut()
+      router.push({ name: routerHelper.names.Login })
+    }
+
     return {
-      isUserLoaded
+      isUserLoaded,
+      onLogOut,
+      isLoggedUser: loginStore.isLoggedUser
     }
   }
 })
