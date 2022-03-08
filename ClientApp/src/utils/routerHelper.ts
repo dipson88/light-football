@@ -6,6 +6,7 @@ export default {
     Home: 'Home',
     Login: 'Login',
     Match: 'Match',
-    PostCreate: 'PostCreate'
+    PostCreate: 'PostCreate',
+    PostEdit: 'PostEdit'
   }
 }

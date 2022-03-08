@@ -97,11 +97,17 @@ const api = {
     get: {
       postByMatchId (matchId: number) {
         return axios.get('posts/post-by-match', { params: { matchId } })
+      },
+      postById (postId: string) {
+        return axios.get('posts/by-id', { params: { postId } })
       }
     },
     post: {
       createPost (model: IPostInput) {
         return axios.post('/posts/create', model)
+      },
+      editPost (model: IPostInput) {
+        return axios.post('/posts/edit', model)
       }
     }
   }

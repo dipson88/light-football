@@ -22,6 +22,8 @@
       <PostList
         v-if="posts.length"
         :posts="posts"
+        :user-id="userId"
+        :edit-callback="editCallback"
         class="match-page__posts-list"
       />
       <p
@@ -46,6 +48,7 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { routerHelper } from '@/utils'
+import { useUserStore } from '@/store/useUserStore'
 
 export default defineComponent({
   name: 'MatchPage',
@@ -65,8 +68,10 @@ export default defineComponent({
     const router = useRouter()
     const matchStore = useMatchesStore()
     const postStore = usePostStore()
+    const userStore = useUserStore()
     const { matchInfo } = storeToRefs(matchStore)
     const { posts } = storeToRefs(postStore)
+    const { userInfo } = userStore
 
     await Promise.all([
       matchStore.getMatchInfoById(+props.id),
@@ -80,11 +85,20 @@ export default defineComponent({
       })
     }
 
+    const editCallback = (id: string) => {
+      router.push({
+        name: routerHelper.names.PostEdit,
+        params: { postId: id }
+      })
+    }
+
     return {
       t,
       matchInfo,
       posts,
-      onCreateOwnPerdiciton
+      userId: userInfo?.id,
+      onCreateOwnPerdiciton,
+      editCallback
     }
   }
 })

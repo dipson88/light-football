@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia'
 import { api } from '@/api'
-import { ILoginUserInput } from '@/interfaces'
+import { ILoginUserInput, IUserInfo } from '@/interfaces'
 
 export const useUserStore = defineStore('user', {
-  state: () => ({
+  state: (): {
+    userInfo: IUserInfo | null,
+    isUserLoaded: boolean
+  } => ({
     userInfo: null,
     isUserLoaded: false
   }),

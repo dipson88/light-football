@@ -7,6 +7,15 @@
       {{ content }}
     </div>
     <p class="post-item__additionals">
+      <NButton
+        v-if="isEditable"
+        text
+        type="info"
+        class="post-item__edit"
+        @click="onEditClick"
+      >
+        {{ t('edit') }}
+      </NButton>
       {{ t('updated', { date:formattedUpdateDate }) }}
     </p>
   </section>
@@ -14,6 +23,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, PropType } from 'vue'
+import { NButton } from 'naive-ui'
 import { dateFormatters, postHelper } from '@/utils'
 import { useI18n } from 'vue-i18n'
 import {
@@ -24,6 +34,9 @@ import {
 
 export default defineComponent({
   name: 'PostItem',
+  components: {
+    NButton
+  },
   props: {
     content: {
       type: String,
@@ -44,7 +57,18 @@ export default defineComponent({
     updatedAt: {
       type: Date,
       default: null
+    },
+    isEditable: {
+      type: Boolean,
+      default: false
+    },
+    editCallback: {
+      type: Function as PropType<() => void>,
+      default: null
     }
+  },
+  emits: {
+    edit: (id: string) => id
   },
   setup (props) {
     const { t } = useI18n()
@@ -66,10 +90,17 @@ export default defineComponent({
       })
     })
 
+    const onEditClick = () => {
+      if (props.editCallback) {
+        props.editCallback()
+      }
+    }
+
     return {
       t,
       formattedUpdateDate,
-      formattedTitle
+      formattedTitle,
+      onEditClick
     }
   }
 })
@@ -92,6 +123,10 @@ export default defineComponent({
     text-align: right;
     margin: 15px 0 0;
     border-bottom: 1px solid $color-brand-gray-dark;
+  }
+
+  &__edit {
+    font-size: $font-size-small;
   }
 }
 </style>

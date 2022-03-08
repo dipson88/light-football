@@ -41,12 +41,36 @@ const getPosts = async (data: Partial<Post>) => {
   }
 }
 
+const editPost = async (data: Omit<Post, '_id'>) => {
+  try {
+    const errors = await validate(data)
+
+    if (errors.length) {
+      return { error: errors, data: null }
+    }
+
+    if (data.id && data.id.length !== 24) {
+      return { error: null, data: [] }
+    }
+
+    // TODO we need to provide id for find criteria
+    const repository = getRepository(Post)
+    const updetedData = await repository.update(data.id, data)
+
+    return { error: null, data: updetedData || null }
+  } catch (e) {
+    return { error: e, data: null }
+  }
+}
+
 export {
   createPost,
-  getPosts
+  getPosts,
+  editPost
 }
 
 export default {
   createPost,
-  getPosts
+  getPosts,
+  editPost
 }

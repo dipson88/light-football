@@ -4,7 +4,7 @@
     @submit.prevent
   >
     <NInput
-      v-model:value="content"
+      v-model:value="contentInput"
       :status="v$.$error ? 'error' : undefined"
       type="textarea"
       placeholder="Content"
@@ -13,22 +13,34 @@
       clearable
       class="post-create-form__textarea"
     />
-    <PostPrediction @prediction-change="onPredictionChange" />
+    <PostPrediction
+      :result="resultInput"
+      :total="totalInput"
+      :total-type="totalTypeInput"
+      @prediction-change="onPredictionChange"
+    />
     <div class="post-create-form__buttons">
+      <NButton
+        v-if="isEditMode"
+        class="post-create-form__button"
+        @click="onReset"
+      >
+        {{ t('reset') }}
+      </NButton>
       <NButton
         :disabled="v$.$error"
         type="primary"
         class="post-create-form__button"
         @click="onSubmit"
       >
-        {{ t('create') }}
+        {{ t('save') }}
       </NButton>
     </div>
   </form>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
@@ -43,6 +55,28 @@ export default defineComponent({
     NInput,
     PostPrediction
   },
+  props: {
+    content: {
+      type: String,
+      default: ''
+    },
+    result: {
+      type: Number as PropType<MatchResultTypes>,
+      default: MatchResultTypes.WinP1
+    },
+    total: {
+      type: Number as PropType<MatchTotalValueTypes>,
+      default: MatchTotalValueTypes.HalfAndZero
+    },
+    totalType: {
+      type: Number as PropType<MatchTotalTypes>,
+      default: MatchTotalTypes.Less
+    },
+    isEditMode: {
+      type: Boolean,
+      default: false
+    }
+  },
   emits: {
     submit: (model: {
       content: string,
@@ -53,20 +87,20 @@ export default defineComponent({
   },
   setup (props, vm) {
     const { t } = useI18n()
-    const content = ref('')
-    const result = ref(MatchResultTypes.WinP1)
-    const total = ref(MatchTotalValueTypes.HalfAndZero)
-    const totalType = ref(MatchTotalTypes.Less)
-    const v$ = useVuelidate({ required }, content)
+    const contentInput = ref(props.content)
+    const resultInput = ref(props.result)
+    const totalInput = ref(props.total)
+    const totalTypeInput = ref(props.totalType)
+    const v$ = useVuelidate({ required }, contentInput)
 
     const onPredictionChange = (model: {
       total: MatchTotalValueTypes,
       totalType: MatchTotalTypes,
       result: MatchResultTypes
     }) => {
-      total.value = model.total
-      totalType.value = model.totalType
-      result.value = model.result
+      totalInput.value = model.total
+      totalTypeInput.value = model.totalType
+      resultInput.value = model.result
     }
 
     const onSubmit = () => {
@@ -74,15 +108,32 @@ export default defineComponent({
 
       if (!v$.value.$invalid) {
         vm.emit('submit', {
-          content: content.value,
-          total: total.value,
-          totalType: totalType.value,
-          result: result.value
+          content: contentInput.value,
+          total: totalInput.value,
+          totalType: totalTypeInput.value,
+          result: resultInput.value
         })
       }
     }
 
-    return { t, content, v$, onPredictionChange, onSubmit }
+    const onReset = () => {
+      contentInput.value = props.content
+      resultInput.value = props.result
+      totalInput.value = props.total
+      totalTypeInput.value = props.totalType
+    }
+
+    return {
+      t,
+      contentInput,
+      resultInput,
+      totalInput,
+      totalTypeInput,
+      v$,
+      onPredictionChange,
+      onSubmit,
+      onReset
+    }
   }
 })
 </script>
@@ -104,6 +155,7 @@ export default defineComponent({
     display: flex;
     justify-content: flex-end;
     margin-top: $spaces;
+    gap: 10px;
   }
 }
 </style>

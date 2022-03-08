@@ -18,3 +18,8 @@ export interface IPostInput {
   total: MatchTotalValueTypes,
   totalType: MatchTotalTypes
 }
+
+export interface IUserInfo {
+  name: string,
+  id: string
+}

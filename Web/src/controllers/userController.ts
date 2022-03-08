@@ -15,6 +15,7 @@ const createUser = async (req: IRequest<User>, res: IResponse) => {
 const getUserInfo = async (req: IRequest, res: IResponse) => {
   if (req.currentUser) {
     return res.status(200).send({
+      id: req.currentUser.id,
       name: req.currentUser.name,
       createdAt: req.currentUser.cratedAt,
       updatedAt: req.currentUser.updatedAt

@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, watch } from 'vue'
+import { defineComponent, PropType, reactive, watch, computed } from 'vue'
 import { NRadioGroup, NRadio } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 import {
@@ -62,6 +62,7 @@ export default defineComponent({
   },
   setup (props, vm) {
     const { t } = useI18n()
+    const propValues = computed(() => [props.result, props.totalType, props.total])
     const groups = reactive([
       {
         title: t('result'),
@@ -121,6 +122,12 @@ export default defineComponent({
         result,
         totalType,
         total
+      })
+    })
+
+    watch(propValues, (newValues) => {
+      groups.forEach((group, index) => {
+        group.value = newValues[index]
       })
     })
 

@@ -1,5 +1,8 @@
 export default {
   en: {
+    edit: 'Edit',
+    reset: 'Reset',
+    save: 'Save',
     log_out: 'Log Out',
     result_total_type_more: '{result} (total {totalType} than {total})',
     result: 'Result',
@@ -34,6 +37,9 @@ export default {
     we_didnt_recognize_the_email : 'We didn\'t recognize the email or password you entered.'
   },
   ru: {
+    edit: 'edit',
+    reset: 'reset',
+    save: 'save',
     log_out: 'log_out',
     result_total_type_more: 'result_total_type_more',
     result: 'result',

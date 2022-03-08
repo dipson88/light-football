@@ -6,8 +6,10 @@ import { IPostInput } from '@/interfaces'
 export const usePostStore = defineStore('posts', {
   state: (): {
     _posts: PostType[] // TODO
+    _post: PostType | null
   } => ({
-    _posts: []
+    _posts: [],
+    _post: null
   }),
   getters: {
     posts: (state) => {
@@ -16,7 +18,8 @@ export const usePostStore = defineStore('posts', {
         createdAt: new Date(post.createdAt),
         updatedAt: new Date(post.updatedAt)
       }))
-    }
+    },
+    post: (state) => state._post
   },
   actions: {
     async getPostsByMatchId (matchId: number) {
@@ -30,6 +33,25 @@ export const usePostStore = defineStore('posts', {
     async createPost (postInput: IPostInput) {
       try {
         await api.posts.post.createPost(postInput)
+
+        return true
+      } catch {
+        return false
+      }
+    },
+    async editPost (postInput: IPostInput) {
+      try {
+        await api.posts.post.editPost(postInput)
+
+        return true
+      } catch {
+        return false
+      }
+    },
+    async getPostById (postId: string) {
+      try {
+        const response = await api.posts.get.postById(postId)
+        this._post = response.data ?? null
 
         return true
       } catch {

@@ -3,11 +3,13 @@
     <PostItem
       v-for="post in posts"
       :key="post.id"
+      :is-editable="post.userId === userId"
       :content="post.content"
       :result="post.result"
       :total-type="post.totalType"
       :total="post.total"
       :updated-at="post.updatedAt"
+      :edit-callback="() => editCallback(post.id)"
       class="post-list__item"
     />
   </section>
@@ -27,6 +29,14 @@ export default defineComponent({
     posts: {
       type: Array as PropType<PostType[]>,
       default: () => []
+    },
+    userId: {
+      type: String,
+      default: ''
+    },
+    editCallback: {
+      type: Function as PropType<(id: string) => void>,
+      default: null
     }
   }
 })
