@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from '@/router'
 import { useLoginStore } from '@/store/useLoginStore'
 import { enums, routerHelper } from '@/utils'
-import { ILoginUserInput, IPostInput } from '@/interfaces'
+import { ILoginUserInput, IPostInput, IPostEditInput } from '@/interfaces'
 import { MatchSatusFilterTypes } from '@/utils/enums'
 
 const refreshTokenUrl = 'auth/refresh'
@@ -106,7 +106,7 @@ const api = {
       createPost (model: IPostInput) {
         return axios.post('/posts/create', model)
       },
-      editPost (model: IPostInput) {
+      editPost (model: IPostEditInput) {
         return axios.post('/posts/edit', model)
       }
     }

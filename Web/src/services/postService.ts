@@ -53,11 +53,15 @@ const editPost = async (data: Omit<Post, '_id'>) => {
       return { error: null, data: [] }
     }
 
-    // TODO we need to provide id for find criteria
     const repository = getRepository(Post)
-    const updetedData = await repository.update(data.id, data)
+    const postModel = new Post(data)
 
-    return { error: null, data: updetedData || null }
+    await repository.update(data.id, {
+      ...postModel,
+      updatedAt: new Date()
+    })
+
+    return { error: null, data: data || null }
   } catch (e) {
     return { error: e, data: null }
   }

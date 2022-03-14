@@ -45,6 +45,7 @@ export default defineComponent({
       totalType: MatchTotalTypes
     }) => {
       const isSuccess = await postStore.editPost({
+        id: props.postId.toString(),
         content: post.content,
         matchId: postData ? postData.matchId : 0,
         result: post.result,

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { api } from '@/api'
 import { PostType } from '@/utils/types'
-import { IPostInput } from '@/interfaces'
+import { IPostInput, IPostEditInput } from '@/interfaces'
 
 export const usePostStore = defineStore('posts', {
   state: (): {
@@ -39,7 +39,7 @@ export const usePostStore = defineStore('posts', {
         return false
       }
     },
-    async editPost (postInput: IPostInput) {
+    async editPost (postInput: IPostEditInput) {
       try {
         await api.posts.post.editPost(postInput)
 

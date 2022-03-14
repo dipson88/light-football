@@ -19,6 +19,10 @@ export interface IPostInput {
   totalType: MatchTotalTypes
 }
 
+export interface IPostEditInput extends IPostInput {
+  id: string
+}
+
 export interface IUserInfo {
   name: string,
   id: string
