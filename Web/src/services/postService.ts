@@ -41,12 +41,40 @@ const getPosts = async (data: Partial<Post>) => {
   }
 }
 
+const editPost = async (data: Omit<Post, '_id'>) => {
+  try {
+    const errors = await validate(data)
+
+    if (errors.length) {
+      return { error: errors, data: null }
+    }
+
+    if (data.id && data.id.length !== 24) {
+      return { error: null, data: [] }
+    }
+
+    const repository = getRepository(Post)
+    const postModel = new Post(data)
+
+    await repository.update(data.id, {
+      ...postModel,
+      updatedAt: new Date()
+    })
+
+    return { error: null, data: data || null }
+  } catch (e) {
+    return { error: e, data: null }
+  }
+}
+
 export {
   createPost,
-  getPosts
+  getPosts,
+  editPost
 }
 
 export default {
   createPost,
-  getPosts
+  getPosts,
+  editPost
 }

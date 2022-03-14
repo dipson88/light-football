@@ -8,7 +8,7 @@ interface ILogin {
   password: string
 }
 
-const loginUser = async (req: IRequest<ILogin>, res: IResponse) => {
+const login = async (req: IRequest<ILogin>, res: IResponse) => {
   if (!req.body.email || !req.body.password) {
     return res.status(400).send()
   }
@@ -22,10 +22,12 @@ const loginUser = async (req: IRequest<ILogin>, res: IResponse) => {
     return res.status(400).send(error)
   }
 
-  const token = tokenService.createUserToken(data.id)
+  const accessToken = tokenService.createUserToken(data.id)
+  const refreshToken = tokenService.createRefreshToken(data.id)
 
   return res.status(200).send({
-    token,
+    accessToken,
+    refreshToken,
     user: {
       id: data.id,
       emial: data.email,
@@ -34,6 +36,21 @@ const loginUser = async (req: IRequest<ILogin>, res: IResponse) => {
   })
 }
 
+const refresh = async (req: IRequest, res: IResponse) => {
+  if (!req.currentUser) {
+    return res.status(401).send()
+  }
+
+  const accessToken = tokenService.createUserToken(req.currentUser.id)
+  const refreshToken = tokenService.createRefreshToken(req.currentUser.id)
+
+  return res.status(200).send({
+    accessToken,
+    refreshToken
+  })
+}
+
 export default {
-  loginUser
+  login,
+  refresh
 }

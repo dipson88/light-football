@@ -1,42 +1,61 @@
 import { defineStore } from 'pinia'
 import { api } from '@/api'
-import { LoginUserInputType } from '@/utils/types'
+import { ILoginUserInput } from '@/interfaces'
 
-const appToken = 'app-token'
+const appAccessToken = 'app-access-token'
+const appRefreshToken = 'app-refresh-token'
+
+type TokenDataType = { accessToken: string; refreshToken: string } | undefined;
 
 export const useLoginStore = defineStore('login', {
   state: () => ({
-    token: localStorage.getItem(appToken) ?? ''
+    accessToken: localStorage.getItem(appAccessToken) ?? '',
+    refreshToken: localStorage.getItem(appRefreshToken) ?? ''
   }),
+  getters: {
+    isLoggedUser: (state) => {
+      return !!state.accessToken.length && !!state.refreshToken.length
+    }
+  },
   actions: {
-    async login (model: Partial<LoginUserInputType>) {
+    setTokens (data: TokenDataType) {
+      this.accessToken = data?.accessToken ?? ''
+      this.refreshToken = data?.refreshToken ?? ''
+      localStorage.setItem(appAccessToken, this.accessToken)
+      localStorage.setItem(appRefreshToken, this.refreshToken)
+    },
+    removeTokens () {
+      this.accessToken = ''
+      this.refreshToken = ''
+      localStorage.removeItem(appAccessToken)
+      localStorage.removeItem(appRefreshToken)
+    },
+    async login (model: Partial<ILoginUserInput>) {
       try {
         const response = await api.authenticate.post.login(model)
-        this.token = response.data?.token ?? ''
-        localStorage.setItem(appToken, this.token)
+        this.setTokens(response.data)
 
         return true
-      } catch (ex) {
-        this.token = ''
-        localStorage.removeItem(appToken)
+      } catch {
+        this.removeTokens()
 
         return false
       }
     },
-    async createUser (model: LoginUserInputType) {
+    async refreshCredentials () {
       try {
-        this.token = ''
-        const response = await api.users.post.createUser(model)
-        this.token = response.data?.token ?? ''
-        localStorage.setItem(appToken, this.token)
+        const response = await api.authenticate.post.refreshToken()
+        this.setTokens(response.data)
 
         return true
-      } catch (ex) {
-        this.token = ''
-        localStorage.removeItem(appToken)
+      } catch {
+        this.removeTokens()
 
         return false
       }
+    },
+    logOut () {
+      this.removeTokens()
     }
   }
 })

@@ -12,11 +12,11 @@
 <script lang="ts">
 import { ref, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
-import { useLoginStore } from '@/store/useLoginStore'
+import { useUserStore } from '@/store/useUserStore'
 import CreateUserForm from '@/components/CreateUserForm.vue'
 import { routerHelper } from '@/utils'
 import { useI18n } from 'vue-i18n'
-import { LoginUserInputType } from '@/utils/types'
+import { ILoginUserInput } from '@/interfaces'
 
 export default defineComponent({
   name: 'CreateUser',
@@ -25,12 +25,12 @@ export default defineComponent({
   },
   setup () {
     const router = useRouter()
-    const loginStore = useLoginStore()
+    const userStore = useUserStore()
     const { t } = useI18n()
     const errorMessage = ref('')
 
-    const onSubmit = async (model: LoginUserInputType) => {
-      const isSuccess = await loginStore.createUser(model)
+    const onSubmit = async (model: ILoginUserInput) => {
+      const isSuccess = await userStore.createUser(model)
 
       if (isSuccess) {
         errorMessage.value = ''
@@ -55,7 +55,7 @@ export default defineComponent({
 <style lang="scss">
 .create-user {
   &__form {
-    margin: 150px auto 0;
+    margin: 10% auto 0;
     max-width: 400px;
   }
 }

@@ -1,10 +1,12 @@
 export default {
   names: {
+    CreateUser: 'CreateUser',
     Error404: 'Error404',
     Error500: 'Error500',
-    HelloWorld: 'HelloWorld',
     Home: 'Home',
     Login: 'Login',
-    CreateUser: 'CreateUser'
+    Match: 'Match',
+    PostCreate: 'PostCreate',
+    PostEdit: 'PostEdit'
   }
 }

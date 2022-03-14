@@ -3,18 +3,26 @@ import { IRequest, IResponse } from '../interfaces'
 import tokenService from '../services/tokenService'
 import userService from '../services/userService'
 
-const authentificateUser = async (req: IRequest, res: IResponse, next: NextFunction) => {
+const checkAuthentificate = async (
+  req: IRequest,
+  res: IResponse,
+  next: NextFunction,
+  isRefresh: boolean
+) => {
+  const status = isRefresh ? 401 : 403
   const token = req.header('Authorization')?.replace('Bearer ', '') ?? ''
-  const decoded = tokenService.verifyUserToken(token)
+  const decoded = isRefresh
+    ? tokenService.verifyRefreshToken(token)
+    : tokenService.verifyUserToken(token)
 
   if (!decoded) {
-    return res.status(401).send({ error: 'Please authentificate' })
+    return res.status(status).send({ error: 'Update Token' })
   }
 
   const { error, data } = await userService.getUser({ id: decoded.userId })
 
   if (error || !data) {
-    return res.status(401).send({ error: 'Please authentificate' })
+    return res.status(status).send({ error: 'Update Token' })
   }
 
   req.currentUser = data
@@ -22,10 +30,21 @@ const authentificateUser = async (req: IRequest, res: IResponse, next: NextFunct
   return next()
 }
 
-export {
-  authentificateUser
-}
+const authentificateUser = async (
+  req: IRequest,
+  res: IResponse,
+  next: NextFunction
+) => checkAuthentificate(req, res, next, false)
+
+const authentificateRefreshToken = async (
+  req: IRequest,
+  res: IResponse,
+  next: NextFunction
+) => checkAuthentificate(req, res, next, true)
+
+export { authentificateUser, authentificateRefreshToken }
 
 export default {
-  authentificateUser
+  authentificateUser,
+  authentificateRefreshToken
 }
