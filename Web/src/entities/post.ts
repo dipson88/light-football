@@ -1,12 +1,10 @@
 import { IsNotEmpty } from 'class-validator'
 import { Entity, Column } from 'typeorm'
 import { BaseEntity } from './baseEntity'
+import { MatchResultTypes, MatchTotalTypes, MatchTotalValueTypes } from '../utils/enums'
 
 @Entity()
 export class Post extends BaseEntity {
-  @Column()
-    title: string
-
   @Column()
     content: string
 
@@ -16,23 +14,39 @@ export class Post extends BaseEntity {
 
   @IsNotEmpty()
   @Column({ nullable: false })
-    matchId: string
+    matchId: number
+
+  @IsNotEmpty()
+  @Column()
+    result: MatchResultTypes
+
+  @IsNotEmpty()
+  @Column()
+    total: MatchTotalValueTypes
+
+  @IsNotEmpty()
+  @Column()
+    totalType: MatchTotalTypes
 
   constructor (post?: IPostInput) {
     super()
 
     if (post) {
-      this.title = post.title
       this.content = post.content
       this.userId = post.userId
       this.matchId = post.matchId
+      this.result = post.result
+      this.total = post.total
+      this.totalType = post.totalType
     }
   }
 }
 
 interface IPostInput {
-  title: string,
   content: string
   userId: string
-  matchId: string
+  matchId: number,
+  result: MatchResultTypes,
+  total: MatchTotalValueTypes
+  totalType: MatchTotalTypes
 }

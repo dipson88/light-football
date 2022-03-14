@@ -6,6 +6,7 @@
         :key="group.header"
         :header-text="group.header"
         :matches="group.matches"
+        @match-select="onMatchSelect"
       />
     </template>
     <div
@@ -34,10 +35,20 @@ export default defineComponent({
       default: () => []
     }
   },
-  setup () {
+  emits: {
+    'match-select': (id: number) => id
+  },
+  setup (props, vm) {
     const { t } = useI18n()
 
-    return { t }
+    const onMatchSelect = (id: number) => {
+      vm.emit('match-select', id)
+    }
+
+    return {
+      t,
+      onMatchSelect
+    }
   }
 })
 </script>
@@ -45,7 +56,7 @@ export default defineComponent({
 <style lang="scss">
 .match-group-list {
   &__no-data {
-    font-size: 12px;
+    font-size: $font-size-x-small;
     text-align: center;
     margin-top: 5px;
   }

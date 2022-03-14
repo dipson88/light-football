@@ -121,7 +121,7 @@ const filterMatches = (matches: Match[], filterType: MatchSatusFilterTypes) => {
       return matches.filter(m => m.matchday === m.season.currentMatchday)
     }
     default: {
-      return []
+      return matches
     }
   }
 }
@@ -137,10 +137,28 @@ const getMatches = async (filterType: MatchSatusFilterTypes) => {
   }
 }
 
+const getMutchById = async (matchId: number) => {
+  try {
+    const teams = await getAllTeamsFromApi()
+    const matches = await getAllMatchesFromApi(teams, MatchSatusFilterTypes.ALL)
+
+    return {
+      error: null,
+      data: matches && matches.matches
+        ? matches.matches.find(match => match.id === matchId)
+        : []
+    }
+  } catch (error) {
+    return { error: error, data: null }
+  }
+}
+
 export default {
-  getMatches
+  getMatches,
+  getMutchById
 }
 
 export {
-  getMatches
+  getMatches,
+  getMutchById
 }

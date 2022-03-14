@@ -61,7 +61,7 @@ import { required, email, helpers } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 import { NButton, NInput } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
-import { LoginUserInputType } from '@/utils/types'
+import { ILoginUserInput } from '@/interfaces'
 
 const lengthValidation = (value: string, min: number, max: number) => {
   return value.length <= max && value.length >= min
@@ -83,7 +83,7 @@ export default defineComponent({
     }
   },
   emits: {
-    submit: (model: LoginUserInputType) => model,
+    submit: (model: ILoginUserInput) => model,
     login: (e: Event) => e
   },
   setup (props, vm) {
@@ -209,7 +209,7 @@ export default defineComponent({
 
   &__error {
     color: $color-brand-danger;
-    font-size: 12px;
+    font-size: $font-size-x-small;
     margin: 0;
   }
 

@@ -1,12 +1,15 @@
 import jwt from 'jsonwebtoken'
 
-const createUserToken = (usdeId: string) => {
-  return jwt.sign({ usdeId }, process.env.JWT_SECRET ?? '')
+const createToken = (usdeId: string, secret: string, expiresIn: string) => {
+  return jwt.sign({ usdeId }, secret, { expiresIn })
 }
 
-const verifyUserToken = (token: string): { userId: string } | null => {
+const verifyToken = (
+  token: string,
+  secret: string
+): { userId: string } | null => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as { userId: string }
+    const decoded = jwt.verify(token, secret) as { userId: string }
 
     return decoded
   } catch {
@@ -14,12 +17,32 @@ const verifyUserToken = (token: string): { userId: string } | null => {
   }
 }
 
+const createUserToken = (usdeId: string) => {
+  return createToken(usdeId, process.env.JWT_SECRET ?? '', '30m')
+}
+
+const createRefreshToken = (usdeId: string) => {
+  return createToken(usdeId, process.env.JWT_SECRET_REFRESH ?? '', '10h')
+}
+
+const verifyUserToken = (token: string) => {
+  return verifyToken(token, process.env.JWT_SECRET ?? '')
+}
+
+const verifyRefreshToken = (refreshToken: string) => {
+  return verifyToken(refreshToken, process.env.JWT_SECRET_REFRESH ?? '')
+}
+
 export {
   createUserToken,
-  verifyUserToken
+  createRefreshToken,
+  verifyUserToken,
+  verifyRefreshToken
 }
 
 export default {
   createUserToken,
-  verifyUserToken
+  createRefreshToken,
+  verifyUserToken,
+  verifyRefreshToken
 }

@@ -29,7 +29,7 @@ export default defineComponent({
     const errorMessage = ref('')
 
     onMounted(async () => {
-      if (loginStore.token) {
+      if (loginStore.accessToken) {
         router.push({ name: routerHelper.names.Home })
       }
     })
@@ -60,7 +60,7 @@ export default defineComponent({
 <style lang="scss">
 .login-page {
   &__form {
-    margin: 150px auto 0;
+    margin: 10% auto 0;
     max-width: 400px;
   }
 }

@@ -1,9 +1,7 @@
 <template>
   <div class="match-list">
     <slot name="header">
-      <div class="match-list__header">
-        {{ headerText }}
-      </div>
+      <MatchListHeader :header-text="headerText" />
     </slot>
     <template v-if="isMatchesExist">
       <MatchItem
@@ -19,6 +17,7 @@
         :away-team-score="match.awayTeamScore"
         :match-satus="match.matchSatus"
         class="match-list__item"
+        @click="onMatchSelect(match.id)"
       />
     </template>
     <div
@@ -33,6 +32,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
 import MatchItem from './MatchItem.vue'
+import MatchListHeader from './MatchListHeader.vue'
 import { MatchType } from '@/utils/types'
 import { useI18n } from 'vue-i18n'
 import { dateFormatters } from '@/utils'
@@ -40,7 +40,8 @@ import { dateFormatters } from '@/utils'
 export default defineComponent({
   name: 'MatchList',
   components: {
-    MatchItem
+    MatchItem,
+    MatchListHeader
   },
   props: {
     matches: {
@@ -52,7 +53,10 @@ export default defineComponent({
       default: ''
     }
   },
-  setup (props) {
+  emits: {
+    'match-select': (id: number) => id
+  },
+  setup (props, vm) {
     const { t } = useI18n()
 
     const mappedMatches = computed(() => {
@@ -73,10 +77,15 @@ export default defineComponent({
       return !!mappedMatches.value.length
     })
 
+    const onMatchSelect = (id: number) => {
+      vm.emit('match-select', id)
+    }
+
     return {
       t,
       mappedMatches,
-      isMatchesExist
+      isMatchesExist,
+      onMatchSelect
     }
   }
 })
@@ -85,7 +94,7 @@ export default defineComponent({
 <style lang="scss">
 .match-list {
   &__item {
-    font-size: 12px;
+    font-size: $font-size-x-small;
     background-color: darken($color-brand-white, 5%);
     cursor: pointer;
 
@@ -97,14 +106,14 @@ export default defineComponent({
   &__header {
     background-color: darken($color-brand-gray, 15%);
     color: $color-brand-white;
-    font-size: 12px;
+    font-size: $font-size-x-small;
     padding: 5px 20px;
     min-height: 25px;
     box-sizing: border-box;
   }
 
   &__no-data {
-    font-size: 12px;
+    font-size: $font-size-x-small;
     text-align: center;
     margin-top: 5px;
   }
