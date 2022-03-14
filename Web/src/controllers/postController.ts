@@ -56,21 +56,10 @@ const getUserPosts = async (req: IRequest, res: IResponse) => {
   return res.status(200).send(data)
 }
 
-const getAllPosts = async (req: IRequest, res: IResponse) => {
-  const { error, data } = await postService.getPosts({})
-
-  if (error) {
-    return res.status(400).send(error)
-  }
-
-  if (!data || !data.length) {
-    return res.status(404).send()
-  }
-
-  return res.status(200).send(data)
-}
-
-const getPost = async (req: IRequest, res: IResponse) => {
+const getPost = async (
+  req: IRequest<unknown, { postId?: string }>,
+  res: IResponse
+) => {
   const postId = req.query.postId
     ? req.query.postId.toString()
     : null
@@ -94,7 +83,10 @@ const getPost = async (req: IRequest, res: IResponse) => {
   return res.status(200).send(data[0])
 }
 
-const getPostsByMatchId = async (req: IRequest, res: IResponse) => {
+const getPostsByMatchId = async (
+  req: IRequest<unknown, { matchId?: string }>,
+  res: IResponse
+) => {
   const matchId = req.query.matchId
     ? Number(req.query.matchId)
     : null
@@ -125,7 +117,6 @@ const getPostsByMatchId = async (req: IRequest, res: IResponse) => {
 export default {
   createPost,
   getUserPosts,
-  getAllPosts,
   getPost,
   getPostsByMatchId,
   editPost

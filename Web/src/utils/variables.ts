@@ -1,9 +1,9 @@
-const apiFrefixName = '/api'
+const apiPrefixName = '/api'
 
 export default {
-  apiFrefixName
+  apiPrefixName
 }
 
 export {
-  apiFrefixName
+  apiPrefixName
 }

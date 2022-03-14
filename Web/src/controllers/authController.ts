@@ -3,12 +3,12 @@ import userService from '../services/userService'
 import tokenService from '../services/tokenService'
 import bcrypt from 'bcryptjs'
 
-interface ILogin {
+interface ILoginInput {
   email: string,
   password: string
 }
 
-const login = async (req: IRequest<ILogin>, res: IResponse) => {
+const login = async (req: IRequest<ILoginInput>, res: IResponse) => {
   if (!req.body.email || !req.body.password) {
     return res.status(400).send()
   }
