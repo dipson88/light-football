@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { defineComponent, PropType, ref, watch, computed } from 'vue'
 import { NRadioGroup, NRadio } from 'naive-ui'
 import { MatchSatusFilterTypes } from '@/utils/enums'
 import { useI18n } from 'vue-i18n'
@@ -38,7 +38,8 @@ export default defineComponent({
   },
   setup (props, vm) {
     const { t } = useI18n()
-    const buttons = [
+    const value = ref(props.selectedType)
+    const buttons = computed(() => [
       {
         value: MatchSatusFilterTypes.CURRENT,
         label: t('current')
@@ -51,8 +52,7 @@ export default defineComponent({
         value: MatchSatusFilterTypes.FINISHED,
         label: t('finished')
       }
-    ]
-    const value = ref(props.selectedType)
+    ])
 
     watch(value, (newValue) => {
       vm.emit('select-type', newValue)
