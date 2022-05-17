@@ -137,7 +137,7 @@ const getMatches = async (filterType: MatchSatusFilterTypes) => {
   }
 }
 
-const getMutchById = async (matchId: number) => {
+const getMatchById = async (matchId: number) => {
   try {
     const teams = await getAllTeamsFromApi()
     const matches = await getAllMatchesFromApi(teams, MatchSatusFilterTypes.ALL)
@@ -155,10 +155,10 @@ const getMutchById = async (matchId: number) => {
 
 export default {
   getMatches,
-  getMutchById
+  getMatchById
 }
 
 export {
   getMatches,
-  getMutchById
+  getMatchById
 }

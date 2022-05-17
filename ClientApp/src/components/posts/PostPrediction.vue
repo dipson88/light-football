@@ -2,21 +2,21 @@
   <div class="post-prediction">
     <div
       v-for="group in groups"
-      :key="group.title"
+      :key="group.titleTKey"
     >
       <h4 class="post-prediction__title">
-        {{ group.title }}
+        {{ t(group.titleTKey) }}
       </h4>
       <NRadioGroup
         v-model:value="group.value"
-        :name="`radiobuttongroup-${group.title}`"
+        :name="`radiobuttongroup-${group.titleTKey}`"
       >
         <NRadio
           v-for="option in group.options"
           :key="option.value"
           :value="option.value"
         >
-          {{ option.label }}
+          {{ option.skipTranslate ? option.labelTKey : t(option.labelTKey) }}
         </NRadio>
       </NRadioGroup>
     </div>
@@ -32,6 +32,22 @@ import {
   MatchTotalTypes,
   MatchTotalValueTypes
 } from '@/utils/enums'
+
+interface IGroup<T> {
+  titleTKey: string
+  options: {
+    labelTKey: string,
+    skipTranslate?: boolean
+    value: T
+  }[]
+  value: T
+}
+
+type Group = [
+  IGroup<MatchResultTypes>,
+  IGroup<MatchTotalTypes>,
+  IGroup<MatchTotalValueTypes>
+]
 
 export default defineComponent({
   name: 'PostPrediction',
@@ -63,53 +79,56 @@ export default defineComponent({
   setup (props, vm) {
     const { t } = useI18n()
     const propValues = computed(() => [props.result, props.totalType, props.total])
-    const groups = reactive([
+    const groups = reactive<Group>([
       {
-        title: t('result'),
+        titleTKey: 'result',
         options: [
           {
-            label: t('w1'),
+            labelTKey: 'w1',
             value: MatchResultTypes.WinP1
           },
           {
-            label: t('x'),
+            labelTKey: 'x',
             value: MatchResultTypes.Draw
           },
           {
-            label: t('w2'),
+            labelTKey: 'w2',
             value: MatchResultTypes.WinP2
           }
         ],
         value: props.result
       },
       {
-        title: t('total_type'),
+        titleTKey: 'total_type',
         options: [
           {
-            label: t('less'),
+            labelTKey: 'less',
             value: MatchTotalTypes.Less
           },
           {
-            label: t('more'),
+            labelTKey: 'more',
             value: MatchTotalTypes.More
           }
         ],
         value: props.totalType
       },
       {
-        title: t('total'),
+        titleTKey: 'total',
         options: [
           {
-            label: '0.5',
-            value: MatchTotalValueTypes.HalfAndZero
+            labelTKey: '0.5',
+            value: MatchTotalValueTypes.HalfAndZero,
+            skipTranslate: true
           },
           {
-            label: '1.5',
-            value: MatchTotalValueTypes.HalfAndOne
+            labelTKey: '1.5',
+            value: MatchTotalValueTypes.HalfAndOne,
+            skipTranslate: true
           },
           {
-            label: '2.5',
-            value: MatchTotalValueTypes.HalfAndTwo
+            labelTKey: '2.5',
+            value: MatchTotalValueTypes.HalfAndTwo,
+            skipTranslate: true
           }
         ],
         value: props.total
@@ -132,6 +151,7 @@ export default defineComponent({
     })
 
     return {
+      t,
       groups
     }
   }

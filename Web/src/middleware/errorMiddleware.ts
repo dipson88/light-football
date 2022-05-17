@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { apiFrefixName } from '../utils/variables'
+import { apiPrefixName } from '../utils/variables'
 
 const errorHandler = (error: Error, req: Request, res: Response, next: NextFunction) => {
   if (!error) {
@@ -12,7 +12,7 @@ const errorHandler = (error: Error, req: Request, res: Response, next: NextFunct
 }
 
 const notExistControllerHandler = (req: Request, res: Response, next: NextFunction) => {
-  if (req.path.includes(apiFrefixName)) {
+  if (req.path.includes(apiPrefixName)) {
     return res.status(404).send('Controller was not found')
   }
 

@@ -4,7 +4,7 @@ import * as path from 'path'
 import errorMiddleware from './middleware/errorMiddleware'
 import sendIndexHtml from './middleware/sendFileMiddleware'
 import routers from './routes'
-import { apiFrefixName } from './utils/variables'
+import { apiPrefixName } from './utils/variables'
 
 const app: Application = express()
 
@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, './public')))
 
 // Set Routers
 routers.forEach(router => {
-  app.use(apiFrefixName, router)
+  app.use(apiPrefixName, router)
 })
 
 // Set Errors Handlers
