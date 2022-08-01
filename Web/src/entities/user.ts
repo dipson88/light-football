@@ -3,6 +3,12 @@ import { BaseEntity } from './baseEntity'
 import { IsEmail, Length } from 'class-validator'
 import bcrypt from 'bcryptjs'
 
+interface IUserInput {
+  email: string
+  password: string
+  name: string
+}
+
 @Entity()
 export class User extends BaseEntity {
   @Column({ unique: true })
@@ -33,10 +39,4 @@ export class User extends BaseEntity {
       this.name = user.name
     }
   }
-}
-
-interface IUserInput {
-  email: string,
-  password: string
-  name: string
 }

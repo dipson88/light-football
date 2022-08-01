@@ -15,7 +15,7 @@ const checkAuthentificate = async (
     ? tokenService.verifyRefreshToken(token)
     : tokenService.verifyUserToken(token)
 
-  if (!decoded) {
+  if (decoded == null) {
     return res.status(status).send({ error: 'Update Token' })
   }
 
@@ -34,13 +34,13 @@ const authentificateUser = async (
   req: IRequest,
   res: IResponse,
   next: NextFunction
-) => checkAuthentificate(req, res, next, false)
+) => await checkAuthentificate(req, res, next, false)
 
 const authentificateRefreshToken = async (
   req: IRequest,
   res: IResponse,
   next: NextFunction
-) => checkAuthentificate(req, res, next, true)
+) => await checkAuthentificate(req, res, next, true)
 
 export { authentificateUser, authentificateRefreshToken }
 

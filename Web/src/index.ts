@@ -11,8 +11,12 @@ const startApp = async () => {
 
   await db.setDbConnection(process.env.MONGODB_URL)
   app.listen(PORT, () => {
-    console.log(`Server is runnung on port http://localhost:${PORT}`)
+    if (PORT) {
+      console.log(`Server is running on port http://localhost:${PORT}`)
+    } else {
+      console.log('PORT is missing!')
+    }
   })
 }
 
-startApp()
+void startApp()

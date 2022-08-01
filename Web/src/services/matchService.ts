@@ -27,7 +27,7 @@ const getTestData = async (fileName: string) => {
 const callFootballApi = async ({ apiString, params }: { apiString: string, params: unknown }) => {
   return await axios.get(apiString, {
     headers: {
-      'X-Auth-Token':  process.env.FOOTBAL_DATA_KEY ?? ''
+      'X-Auth-Token': process.env.FOOTBAL_DATA_KEY ?? ''
     },
     params
   })
@@ -133,7 +133,7 @@ const getMatches = async (filterType: MatchSatusFilterTypes) => {
 
     return { error: null, data: matches || [] }
   } catch (error) {
-    return { error: error, data: null }
+    return { error, data: null }
   }
 }
 
@@ -144,12 +144,12 @@ const getMatchById = async (matchId: number) => {
 
     return {
       error: null,
-      data: matches && matches.matches
+      data: matches?.matches
         ? matches.matches.find(match => match.id === matchId)
         : []
     }
   } catch (error) {
-    return { error: error, data: null }
+    return { error, data: null }
   }
 }
 

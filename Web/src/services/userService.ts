@@ -7,7 +7,7 @@ const createUser = async (data: Omit<User, 'id'>) => {
     const userModel = new User(data)
     const errors = await validate(userModel)
 
-    if (errors.length) {
+    if (errors.length > 0) {
       return { error: errors, data: null }
     }
 
@@ -36,7 +36,7 @@ const getUser = async (data: Partial<User>) => {
       user = await repository.findOne({ ...data })
     }
 
-    return { error: null, data: user || null }
+    return { error: null, data: user ?? null }
   } catch (e) {
     return { error: e, data: null }
   }

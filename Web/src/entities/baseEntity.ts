@@ -2,7 +2,7 @@ import { ObjectIdColumn, ObjectID, CreateDateColumn, UpdateDateColumn } from 'ty
 
 export class BaseEntity {
   @ObjectIdColumn({ unique: true })
-  private _id: ObjectID
+  private readonly _id: ObjectID
 
   get id () {
     return this._id.toString()

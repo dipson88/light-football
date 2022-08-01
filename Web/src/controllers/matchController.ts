@@ -41,7 +41,7 @@ const getMatchInfo = async (
     return res.status(400).send(error)
   }
 
-  return res.status(200).send(data || null)
+  return res.status(200).send(data ?? null)
 }
 
 export default {

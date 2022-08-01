@@ -18,9 +18,9 @@ export class Match {
     this.matchday = match.matchday
     this.status = match.status
     this.score = new Score(match.score)
-    this.homeTeam = new MatchTeam (match.homeTeam)
-    this.awayTeam = new MatchTeam (match.awayTeam)
-    this.season = new Season (match.season)
+    this.homeTeam = new MatchTeam(match.homeTeam)
+    this.awayTeam = new MatchTeam(match.awayTeam)
+    this.season = new Season(match.season)
   }
 }
 
