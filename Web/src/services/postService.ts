@@ -7,7 +7,7 @@ const createPost = async (data: Omit<Post, 'id'>) => {
     const postModel = new Post(data)
     const errors = await validate(postModel)
 
-    if (errors.length) {
+    if (errors.length > 0) {
       return { error: errors, data: null }
     }
 
@@ -45,7 +45,7 @@ const editPost = async (data: Omit<Post, '_id'>) => {
   try {
     const errors = await validate(data)
 
-    if (errors.length) {
+    if (errors.length > 0) {
       return { error: errors, data: null }
     }
 

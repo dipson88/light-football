@@ -4,7 +4,7 @@ import tokenService from '../services/tokenService'
 import bcrypt from 'bcryptjs'
 
 interface ILoginInput {
-  email: string,
+  email: string
   password: string
 }
 

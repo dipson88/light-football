@@ -3,6 +3,15 @@ import { Entity, Column } from 'typeorm'
 import { BaseEntity } from './baseEntity'
 import { MatchResultTypes, MatchTotalTypes, MatchTotalValueTypes } from '../utils/enums'
 
+interface IPostInput {
+  content: string
+  userId: string
+  matchId: number
+  result: MatchResultTypes
+  total: MatchTotalValueTypes
+  totalType: MatchTotalTypes
+}
+
 @Entity()
 export class Post extends BaseEntity {
   @Column()
@@ -40,13 +49,4 @@ export class Post extends BaseEntity {
       this.totalType = post.totalType
     }
   }
-}
-
-interface IPostInput {
-  content: string
-  userId: string
-  matchId: number,
-  result: MatchResultTypes,
-  total: MatchTotalValueTypes
-  totalType: MatchTotalTypes
 }

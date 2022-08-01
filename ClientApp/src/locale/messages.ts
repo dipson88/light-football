@@ -34,7 +34,7 @@ export default {
     email: 'Email',
     sign_in: 'Sign In',
     password: 'Password',
-    we_didnt_recognize_the_email : 'We didn\'t recognize the email or password you entered.'
+    we_didnt_recognize_the_email: 'We didn\'t recognize the email or password you entered.'
   },
   ru: {
     edit: 'Изменить',
